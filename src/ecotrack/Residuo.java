@@ -17,7 +17,7 @@ public class Residuo {
     private TipoResiduo tipo;
     private double peso;
     private LocalDate fechaRecoleccion;
-    private int prioridadAmbiental;
+    private int prioridad;
 
     public String getId() {
         return id;
@@ -59,11 +59,11 @@ public class Residuo {
         fechaRecoleccion = n;
     }
 
-    public int getPrioridadAmbiental() {
-        return prioridadAmbiental;
+    public int getPrioridad() {
+        return prioridad;
     }
-    public void setPrioridadAmbientl(int n){
-        prioridadAmbiental = n;
+    public void setPriorida(int n){
+        prioridad= n;
     }
 
     public enum TipoResiduo {
