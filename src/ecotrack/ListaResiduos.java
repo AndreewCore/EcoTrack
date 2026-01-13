@@ -4,25 +4,27 @@
  */
 package ecotrack;
 
-import TDA.CircularLinkedList;
+import TDA.CircularDoublyLinkedList;
 import Utilitaria.ResiduoComparators;
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  *
- * @author Dominic
+ * @author Dominic Izurrieta & Paúl Rodríguez
  */
-public class ListaResiduos extends CircularLinkedList<Residuo> {
-     public ListaResiduos() {
+public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
+    
+    public ListaResiduos() {
         super();
     }
 
+    // MÉTODOS DE ORDENAMIENTO
     public void ordenarPorPeso() {
         sort(ResiduoComparators.porPeso());
     }
 
     public void ordenarPorPesoDescendente() {
-        // Usamos reversed() para orden descendente
         sort(ResiduoComparators.porPeso().reversed());
     }
 
@@ -37,11 +39,11 @@ public class ListaResiduos extends CircularLinkedList<Residuo> {
     public void ordenarPorTipo() {
         sort(ResiduoComparators.porTipo());
     }
+    
     public void ordenarPorTipoDescendente() {
         sort(ResiduoComparators.porTipo().reversed());
     }
 
-   
     // MÉTODOS DE FILTRADO
     public ListaResiduos filtrarPorTipo(Residuo.TipoResiduo tipo) {
         ListaResiduos resultado = new ListaResiduos();
@@ -179,4 +181,4 @@ public class ListaResiduos extends CircularLinkedList<Residuo> {
         sb.append("]");
         return sb.toString();
     }
-    }
+}

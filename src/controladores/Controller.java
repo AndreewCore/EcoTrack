@@ -9,6 +9,7 @@ package controladores;
  * @author Usuario
  */
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 public class Controller {
