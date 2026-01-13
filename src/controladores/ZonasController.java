@@ -5,12 +5,9 @@
 package controladores;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -74,28 +71,6 @@ public class ZonasController{
     
     @FXML
     private Button returnButton;
-    
-    @FXML
-    public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("MainScene cargada correctamente");
-        
-        // Información del sistema (opcional)
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        System.out.println("Java Version: " + javaVersion);
-        System.out.println("JavaFX Version: " + javafxVersion);
-        
-        // Configuración adicional del ImageView si es necesario
-        configureImageView();
-    }
-    
-    private void configureImageView() {
-        // Asegurar que la imagen mantenga su proporción
-        zonasSceneView.setPreserveRatio(true);
-        
-        // Hacer que la imagen sea suave al escalar
-        zonasSceneView.setSmooth(true);
-    }
     
     @FXML
     public void highlightFortinMonteSinai(){
@@ -169,10 +144,6 @@ public class ZonasController{
     public void highlightCentro(){
         mapaView.setImage(new Image(getClass().getResourceAsStream("/images/MapasGYE/Mapa Guayaquil Trazado Blanco Centro.png")));
     }
-    
-    
-    
-    
 
     @FXML
     private void switchToSceneMain(ActionEvent event) throws IOException{

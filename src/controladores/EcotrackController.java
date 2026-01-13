@@ -33,6 +33,10 @@ public class EcotrackController {
     private Button residuosButton;
     @FXML
     private Button zonasButton;
+    @FXML
+    private Button centroReciclajeButton;
+    @FXML
+    private Button estadisticasButton;
     
     @FXML
     private void switchToSceneResiduos(ActionEvent event) throws IOException{
@@ -52,15 +56,22 @@ public class EcotrackController {
         stage.show();
     }
     
-    private void configureImageView() {
-        // Asegurar que la imagen mantenga su proporción
-        mainSceneView.setPreserveRatio(true);
-        
-        // Hacer que la imagen sea suave al escalar
-        mainSceneView.setSmooth(true);
+    @FXML
+    private void switchToSceneCentroReciclaje(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/CentroReciclajeMenu.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
-    public ImageView getMainSceneView() {
-        return mainSceneView;
+    @FXML
+    private void switchToSceneEstadisticas(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/EstadisticasMenu.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
+
 }

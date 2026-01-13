@@ -14,5 +14,7 @@
       </ImageView>
       <Button fx:id="residuosButton" layoutX="95.0" layoutY="262.0" mnemonicParsing="false" onAction="#switchToSceneResiduos" opacity="0.0" prefHeight="454.0" prefWidth="243.0" text="Button" />
       <Button fx:id="zonasButton" layoutX="391.0" layoutY="262.0" mnemonicParsing="false" onAction="#switchToSceneZonas" opacity="0.0" prefHeight="454.0" prefWidth="243.0" text="Button" />
+      <Button fx:id="centroReciclajeButton" layoutX="686.0" layoutY="262.0" mnemonicParsing="false" onAction="#switchToSceneCentroReciclaje" opacity="0.0" prefHeight="454.0" prefWidth="243.0" text="Button" />
+      <Button fx:id="estadisticasButton" layoutX="982.0" layoutY="262.0" mnemonicParsing="false" onAction="#switchToSceneEstadisticas" opacity="0.0" prefHeight="454.0" prefWidth="243.0" text="Button" />
    </children>
 </AnchorPane>

@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controladores;
 
@@ -16,18 +16,17 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
  *
- * @author Dominic Izurrieta & Paúl Rodríguez
+ * @author Paúl Rodríguez
  */
-public class ResiduosController{
-
+public class CentroReciclajeController {
+    
     private Stage stage;
     private Scene scene;
     private Parent root;    
     
     @FXML
-    private ImageView residuosSceneView;
+    private ImageView centroReciclajeSceneView;
     
     @FXML
     private Button returnButton;
@@ -40,5 +39,4 @@ public class ResiduosController{
             stage.setScene(scene);
             stage.show();
     }    
-    
 }
