@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Dominic
+ * @author Dominic Izurrieta & Paúl Rodríguez
  */
 public class ResiduosController{
 

@@ -31,24 +31,21 @@ public class EcotrackController {
     
     @FXML
     private Button residuosButton;
-    
     @FXML
-    public void initialize() {
-        System.out.println("MainScene cargada correctamente");
-        
-        // Información del sistema (opcional)
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        System.out.println("Java Version: " + javaVersion);
-        System.out.println("JavaFX Version: " + javafxVersion);
-        
-        // Configuración adicional del ImageView si es necesario
-        configureImageView();
-    }
+    private Button zonasButton;
     
     @FXML
     private void switchToSceneResiduos(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/ResiduosMenu.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    private void switchToSceneZonas(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/RutasMenu.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
