@@ -1,39 +1,64 @@
-package TDA;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package TDA;
+
+import java.util.Comparator;
 
 /**
- *
+ * 
  * @author Paúl Rodríguez
  */
-
-public class Cola<E> {
+public class ColaPrioridad<E> {
     
-    private NodoCola<E> frente;  // Nodo al frente de la cola (próximo a salir)
-    private NodoCola<E> fin;     // Nodo al final de la cola (último en entrar)
+    private NodoCola<E> frente;
     private int tamaño;
-
-    public Cola() {
+    private Comparator<E> comparador;
+    
+    public ColaPrioridad() {
         this.frente = null;
-        this.fin = null;
         this.tamaño = 0;
+        this.comparador = null;
+    }
+    
+    public ColaPrioridad(Comparator<E> comparador) {
+        this.frente = null;
+        this.tamaño = 0;
+        this.comparador = comparador;
     }
     
     public void encolar(E elemento) {
         NodoCola<E> nuevoNodo = new NodoCola<>(elemento);
         
-        if (estaVacia()) {
+        // Si la cola está vacía o el nuevo elemento tiene mayor prioridad que el frente
+        if (estaVacia() || tieneMayorPrioridad(elemento, frente.getElemento())) {
+            nuevoNodo.setSiguiente(frente);
             frente = nuevoNodo;
-            fin = nuevoNodo;
         } else {
-            fin.setSiguiente(nuevoNodo);
-            fin = nuevoNodo;
+            // Buscar la posición correcta para insertar
+            NodoCola<E> actual = frente;
+            
+            while (actual.getSiguiente() != null && 
+                   !tieneMayorPrioridad(elemento, actual.getSiguiente().getElemento())) {
+                actual = actual.getSiguiente();
+            }
+            
+            nuevoNodo.setSiguiente(actual.getSiguiente());
+            actual.setSiguiente(nuevoNodo);
         }
         
         tamaño++;
+    }
+    
+    @SuppressWarnings("unchecked")
+    private boolean tieneMayorPrioridad(E elemento1, E elemento2) {
+        if (comparador != null) {
+            return comparador.compare(elemento1, elemento2) > 0;
+        } else {
+            // Asume que E implementa Comparable
+            return ((Comparable<E>) elemento1).compareTo(elemento2) > 0;
+        }
     }
     
     public E desencolar() {
@@ -45,14 +70,9 @@ public class Cola<E> {
         frente = frente.getSiguiente();
         tamaño--;
         
-        // Si la cola queda vacía, también actualizar fin
-        if (frente == null) {
-            fin = null;
-        }
-        
         return elemento;
     }
-    
+
     public E verFrente() {
         if (estaVacia()) {
             throw new IllegalStateException("La cola está vacía");
@@ -67,13 +87,12 @@ public class Cola<E> {
     public int getTamaño() {
         return tamaño;
     }
-    
+
     public void vaciar() {
         frente = null;
-        fin = null;
         tamaño = 0;
     }
-    
+
     public boolean contiene(E elemento) {
         NodoCola<E> actual = frente;
         while (actual != null) {
@@ -84,15 +103,15 @@ public class Cola<E> {
         }
         return false;
     }
-    
+
     @Override
     public String toString() {
         if (estaVacia()) {
-            return "Cola vacía";
+            return "Cola de Prioridad vacía";
         }
         
         StringBuilder sb = new StringBuilder();
-        sb.append("Cola [Frente -> Fin]: ");
+        sb.append("Cola de Prioridad [Mayor -> Menor]: ");
         NodoCola<E> actual = frente;
         
         while (actual != null) {
@@ -105,7 +124,7 @@ public class Cola<E> {
         
         return sb.toString();
     }
-    
+
     @SuppressWarnings("unchecked")
     public E[] toArray() {
         if (estaVacia()) {
@@ -137,4 +156,50 @@ public class Cola<E> {
         return actual.getElemento();
     }
 
+    public void cambiarComparador(Comparator<E> nuevoComparador) {
+        if (estaVacia()) {
+            this.comparador = nuevoComparador;
+            return;
+        }
+        
+        // Guardar todos los elementos
+        E[] elementos = toArray();
+        
+        // Vaciar la cola
+        vaciar();
+        
+        // Cambiar el comparador
+        this.comparador = nuevoComparador;
+        
+        // Volver a encolar todos los elementos (se reordenarán automáticamente)
+        for (E elemento : elementos) {
+            encolar(elemento);
+        }
+    }
+
+    public boolean remover(E elemento) {
+        if (estaVacia()) {
+            return false;
+        }
+        
+        // Si el elemento está al frente
+        if (frente.getElemento().equals(elemento)) {
+            frente = frente.getSiguiente();
+            tamaño--;
+            return true;
+        }
+        
+        // Buscar en el resto de la cola
+        NodoCola<E> actual = frente;
+        while (actual.getSiguiente() != null) {
+            if (actual.getSiguiente().getElemento().equals(elemento)) {
+                actual.setSiguiente(actual.getSiguiente().getSiguiente());
+                tamaño--;
+                return true;
+            }
+            actual = actual.getSiguiente();
+        }
+        
+        return false;
+    }
 }
