@@ -8,38 +8,44 @@ package TDA;
  *
  * @author Paúl Rodríguez
  */
-
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
+public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E> {
+
     private DoublyNodeList<E> last;
     private DoublyNodeList<E> header;
-	
+
     public CircularDoublyLinkedList() {
         this.last = null;
     }
-    
+
     @Override
     public int size() {
-        if (last == null) return 0;
+        if (last == null) {
+            return 0;
+        }
         int valor = 1;
         DoublyNodeList actual = last.getNext();
-        while (actual != last){
+        while (actual != last) {
             valor++;
-            actual = actual.getNext();            
+            actual = actual.getNext();
         }
         return valor;
     }
-	
+
     @Override
-    public boolean isEmpty() { return size() == 0; }
-	
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
     @Override
-    public void clear() { last = null; } 
-	
+    public void clear() {
+        last = null;
+    }
+
     @Override
-    public E get(int index){
+    public E get(int index) {
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Índice fuera de rango: " + index);
         }
@@ -51,7 +57,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
     }
 
     @Override
-    public E removeFirst(){
+    public E removeFirst() {
         if (isEmpty()) {
             throw new IllegalStateException("La lista está vacía");
         }
@@ -59,23 +65,22 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
         DoublyNodeList<E> first = last.getNext();
         E content = first.getContent();
 
-        if (first == last) { 
+        if (first == last) {
             last = null; // Solo hay un elemento
-        }
-        else {
+        } else {
             DoublyNodeList<E> second = first.getNext();
             last.setNext(second);
             second.setPrev(last);
         }
-        
+
         header = last.getNext();
         return content;
     }
 
     @Override
-    public E removeLast(){
-        if (isEmpty()) { 
-            throw new IllegalStateException("La lista está vacía"); 
+    public E removeLast() {
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
         }
 
         E content = last.getContent();
@@ -95,7 +100,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
     }
 
     @Override
-    public E remove(int index){
+    public E remove(int index) {
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Índice fuera de rango: " + index);
         }
@@ -214,7 +219,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
         header = last.getNext();
         return oldContent;
     }
-    
+
     @Override
     public String toString() {
         if (isEmpty()) {
@@ -259,13 +264,19 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
         }
 
         // Si la lista está vacía
-        if (last == null) return null;
+        if (last == null) {
+            return null;
+        }
 
         // Si es el último nodo
-        if (index == size() - 1) return last;
+        if (index == size() - 1) {
+            return last;
+        }
 
         // Si es el primer nodo
-        if (index == 0) return last.getNext();
+        if (index == 0) {
+            return last.getNext();
+        }
 
         int size = size();
 
@@ -291,8 +302,17 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
     // porque cada nodo tiene referencia directa a su predecesor con getPrev()
     // Lo incluyo solo por completitud, pero podrías simplemente usar node.getPrev()
     private DoublyNodeList<E> getPreviousNode(DoublyNodeList<E> node) {
-        if (last == null || node == null) return null;
+        if (last == null || node == null) {
+            return null;
+        }
         return node.getPrev();
+    }
+
+    public E getLast() {
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
+        }
+        return last.getContent();
     }
 
     public void sort(Comparator<E> comparator) {
@@ -322,5 +342,5 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             getNodeAt(j + 1).setContent(key);
         }
     }
-	
+
 }

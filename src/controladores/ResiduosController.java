@@ -34,14 +34,13 @@ import javafx.stage.Stage;
  *
  * @author Dominic Izurrieta & Paúl Rodríguez
  */
-
-public class ResiduosController implements Initializable{
+public class ResiduosController implements Initializable {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    @FXML    
+    @FXML
     private ListView<String> nombreShownListView;
     @FXML
     private ListView<TipoResiduo> tipoShownListView;
@@ -49,13 +48,13 @@ public class ResiduosController implements Initializable{
     private ListView<Double> pesoShownListView;
     @FXML
     private ListView<ZonaGuayaquil> zonaShownListView;
-    
+
     @FXML
     private ImageView residuosSceneView;
-    
+
     @FXML
     private Button returnButton;
-    
+
     @FXML
     private Label avisoLabel;
 
@@ -71,80 +70,80 @@ public class ResiduosController implements Initializable{
     private ChoiceBox<String> filtradoChoiceBox;
     @FXML
     private ChoiceBox<ZonaGuayaquil> zonaChoiceBox;
-    
+
     private String[] opcionesFiltrado = {};
     private String[] opcionesOrdenado = {};
-    
+
     private String ordenamiento;
     private String filtrado;
-    
+
     private String nombreResiduo;
     private TipoResiduo tipoResiduo;
     private int valorPeso;
     private ZonaGuayaquil zonaResiduo;
-    
+
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL arg0, ResourceBundle arg1) {
         tipoChoiceBox.getItems().addAll(TipoResiduo.values());
         tipoChoiceBox.setOnAction(this::establecerTipo);
-        
+
         zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
         zonaChoiceBox.setOnAction(this::establecerZona);
-        
+
         ordenamientoChoiceBox.getItems().addAll(opcionesOrdenado);
         ordenamientoChoiceBox.setOnAction(this::elegirOrdenamiento);
-        
+
         filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
         filtradoChoiceBox.setOnAction(this::elegirFiltrado);
-        
-        for (Residuo r : ListaResiduos.getListaResiduosGlobal()){
+
+        for (Residuo r : ListaResiduos.getListaResiduosGlobal()) {
             nombreShownListView.getItems().add(r.getNombre());
             tipoShownListView.getItems().add(r.getTipo());
             pesoShownListView.getItems().add(r.getPeso());
             zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
         }
-        
+
     }
-    
-    public void establecerZona(ActionEvent event){
+
+    public void establecerZona(ActionEvent event) {
         zonaResiduo = zonaChoiceBox.getValue();
     }
-    
-    public void establecerTipo(ActionEvent event){
+
+    public void establecerTipo(ActionEvent event) {
         tipoResiduo = tipoChoiceBox.getValue();
     }
-    
-    public void elegirOrdenamiento(ActionEvent event){
+
+    public void elegirOrdenamiento(ActionEvent event) {
         ordenamiento = ordenamientoChoiceBox.getValue();
     }
-    
-    public void elegirFiltrado(ActionEvent event){
+
+    public void elegirFiltrado(ActionEvent event) {
         filtrado = filtradoChoiceBox.getValue();
     }
-    
-    public void agregarResiduo(ActionEvent event){
+
+    public void agregarResiduo(ActionEvent event) {
         // Validar nombre
-        if (nombreField.getText() == null || nombreField.getText().isEmpty()){
+        if (nombreField.getText() == null || nombreField.getText().isEmpty()) {
             avisoLabel.setText("Por favor, escribir un Nombre para el Residuo");
             avisoLabel.setTextFill(Color.RED);
             return;
         }
 
         // Validar tipo
-        if (tipoChoiceBox.getValue() == null){
+        if (tipoChoiceBox.getValue() == null) {
             avisoLabel.setText("Por favor, elegir un Tipo de Residuo");
             avisoLabel.setTextFill(Color.RED);
             return;
         }
 
         // Validar zona
-        if (zonaChoiceBox.getValue() == null){
+        if (zonaChoiceBox.getValue() == null) {
             avisoLabel.setText("Por favor, elegir una Zona");
             avisoLabel.setTextFill(Color.RED);
             return;
         }
 
-        try{
+        try {
             valorPeso = Integer.parseInt(pesoField.getText());
 
             if (valorPeso <= 0) {
@@ -164,24 +163,21 @@ public class ResiduosController implements Initializable{
 
             // Limpiar campos después de agregar exitosamente
             limpiarCampos();
-            
-            for (Residuo re : ListaResiduos.getListaResiduosGlobal()){
-                nombreShownListView.getItems().add(re.getNombre());
-                tipoShownListView.getItems().add(re.getTipo());
-                pesoShownListView.getItems().add(re.getPeso());
-                zonaShownListView.getItems().add(re.getZona().getZonaGuayaquil());
-            }
 
-        }
-        catch (NumberFormatException e){
+            Residuo nuevo = ListaResiduos.getListaResiduosGlobal().getLast();
+            nombreShownListView.getItems().add(nuevo.getNombre());
+            tipoShownListView.getItems().add(nuevo.getTipo());
+            pesoShownListView.getItems().add(nuevo.getPeso());
+            zonaShownListView.getItems().add(nuevo.getZona().getZonaGuayaquil());
+
+        } catch (NumberFormatException e) {
             avisoLabel.setText("Por favor, solo ingrese números en Peso");
             avisoLabel.setTextFill(Color.RED);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             avisoLabel.setText("Error: " + e.getMessage());
             avisoLabel.setTextFill(Color.RED);
         }
-        
+
     }
 
     // Método auxiliar para limpiar campos
@@ -191,14 +187,14 @@ public class ResiduosController implements Initializable{
         tipoChoiceBox.setValue(null);
         zonaChoiceBox.setValue(null);
     }
-    
+
     @FXML
-    private void switchToSceneMain(ActionEvent event) throws IOException{
-            Parent root = FXMLLoader.load(getClass().getResource("/vistas/ecotrack.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-    }    
-    
+    private void switchToSceneMain(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/ecotrack.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
