@@ -29,5 +29,7 @@
       <ListView fx:id="tipoShownListView" layoutX="639.0" layoutY="66.0" prefHeight="225.0" prefWidth="168.0" />
       <ListView fx:id="pesoShownListView" layoutX="826.0" layoutY="66.0" prefHeight="225.0" prefWidth="135.0" />
       <ListView fx:id="zonaShownListView" layoutX="977.0" layoutY="66.0" prefHeight="225.0" prefWidth="252.0" />
+      <Button fx:id="goBackButton" layoutX="421.0" layoutY="325.0" mnemonicParsing="false" opacity="0.0" prefHeight="82.0" prefWidth="398.0" text="Button" />
+      <Button fx:id="goForwardButton" layoutX="840.0" layoutY="325.0" mnemonicParsing="false" opacity="0.0" prefHeight="82.0" prefWidth="398.0" text="Button" />
    </children>
 </AnchorPane>
