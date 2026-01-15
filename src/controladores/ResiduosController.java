@@ -5,6 +5,7 @@
 package controladores;
 
 import ecotrack.Zona;
+import ecotrack.ZonaGuayaquil;
 import ecotrack.Residuo;
 import ecotrack.TipoResiduo;
 import ecotrack.ListaResiduos;
@@ -22,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -37,7 +39,16 @@ public class ResiduosController implements Initializable{
 
     private Stage stage;
     private Scene scene;
-    private Parent root;    
+    private Parent root;
+
+    @FXML    
+    private ListView<String> nombreShownListView;
+    @FXML
+    private ListView<TipoResiduo> tipoShownListView;
+    @FXML
+    private ListView<Double> pesoShownListView;
+    @FXML
+    private ListView<ZonaGuayaquil> zonaShownListView;
     
     @FXML
     private ImageView residuosSceneView;
@@ -59,24 +70,25 @@ public class ResiduosController implements Initializable{
     @FXML
     private ChoiceBox<String> filtradoChoiceBox;
     @FXML
-    private ChoiceBox<String> zonaChoiceBox;
+    private ChoiceBox<ZonaGuayaquil> zonaChoiceBox;
     
     private String[] opcionesFiltrado = {};
     private String[] opcionesOrdenado = {};
-    private String[] zonas = {"Fortin / Monte Sinai", "Vergeles", "Sauces / Samanes", "Bastion", "Via a la Costa 1", "Via a la Costa 2", "Urdesa / Kennedy", "San Felipe / Mapasingue", "Samborondon", "Prosperina / Ceibos", "Portete", "Parque Centenario", "Isla Trinitaria", "Isla Mocoli", "Guasmo", "FAE", "Entre Rios / La Puntilla", "Centro"};
-    private TipoResiduo[] tiposResiduo = TipoResiduo.values();
+    
+    private String ordenamiento;
+    private String filtrado;
     
     private String nombreResiduo;
     private TipoResiduo tipoResiduo;
     private int valorPeso;
-    private Zona zonaResiduo;
+    private ZonaGuayaquil zonaResiduo;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        tipoChoiceBox.getItems().addAll(tiposResiduo);
+        tipoChoiceBox.getItems().addAll(TipoResiduo.values());
         tipoChoiceBox.setOnAction(this::establecerTipo);
         
-        zonaChoiceBox.getItems().addAll(zonas);
+        zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
         zonaChoiceBox.setOnAction(this::establecerZona);
         
         ordenamientoChoiceBox.getItems().addAll(opcionesOrdenado);
@@ -84,10 +96,18 @@ public class ResiduosController implements Initializable{
         
         filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
         filtradoChoiceBox.setOnAction(this::elegirFiltrado);
+        
+        for (Residuo r : ListaResiduos.getListaResiduosGlobal()){
+            nombreShownListView.getItems().add(r.getNombre());
+            tipoShownListView.getItems().add(r.getTipo());
+            pesoShownListView.getItems().add(r.getPeso());
+            zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
+        }
+        
     }
     
     public void establecerZona(ActionEvent event){
-        String zona = zonaChoiceBox.getValue();
+        zonaResiduo = zonaChoiceBox.getValue();
     }
     
     public void establecerTipo(ActionEvent event){
@@ -95,11 +115,11 @@ public class ResiduosController implements Initializable{
     }
     
     public void elegirOrdenamiento(ActionEvent event){
-        String ordenamiento = ordenamientoChoiceBox.getValue();
+        ordenamiento = ordenamientoChoiceBox.getValue();
     }
     
     public void elegirFiltrado(ActionEvent event){
-        String filtrado = filtradoChoiceBox.getValue();
+        filtrado = filtradoChoiceBox.getValue();
     }
     
     public void agregarResiduo(ActionEvent event){
@@ -135,9 +155,8 @@ public class ResiduosController implements Initializable{
 
             nombreResiduo = nombreField.getText();
             tipoResiduo = tipoChoiceBox.getValue();
-            
 
-            Residuo r = new Residuo(nombreResiduo, tipoResiduo, valorPeso);
+            Residuo r = new Residuo(nombreResiduo, tipoResiduo, valorPeso, zonaResiduo);
             ListaResiduos.getListaResiduosGlobal().addLast(r);
 
             avisoLabel.setText("Se agregó el Residuo Exitosamente");
@@ -145,6 +164,13 @@ public class ResiduosController implements Initializable{
 
             // Limpiar campos después de agregar exitosamente
             limpiarCampos();
+            
+            for (Residuo re : ListaResiduos.getListaResiduosGlobal()){
+                nombreShownListView.getItems().add(re.getNombre());
+                tipoShownListView.getItems().add(re.getTipo());
+                pesoShownListView.getItems().add(re.getPeso());
+                zonaShownListView.getItems().add(re.getZona().getZonaGuayaquil());
+            }
 
         }
         catch (NumberFormatException e){
@@ -155,6 +181,7 @@ public class ResiduosController implements Initializable{
             avisoLabel.setText("Error: " + e.getMessage());
             avisoLabel.setTextFill(Color.RED);
         }
+        
     }
 
     // Método auxiliar para limpiar campos

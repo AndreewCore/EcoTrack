@@ -10,12 +10,19 @@ package ecotrack;
  */
 
 public class Zona {
-    int pesoPendiente;
+    private ZonaGuayaquil zonaGuayaquil;
+    double pesoPendiente;
     
-    public int getPesoPendiente(){ return pesoPendiente; }
-    public void setPesoPendiente(int p){ pesoPendiente = p; }
+    public Zona(ZonaGuayaquil zonaGuayaquil) {
+        this.zonaGuayaquil = zonaGuayaquil;
+        this.pesoPendiente = 0;
+    }
     
-    public int calcularUtilidadAmbiental(int pesoRecolectado){
+    public double getPesoPendiente(){ return pesoPendiente; }
+    public void setPesoPendiente(double p){ pesoPendiente = p; }
+    public ZonaGuayaquil getZonaGuayaquil(){ return zonaGuayaquil; }
+    
+    public double calcularUtilidadAmbiental(int pesoRecolectado){
         return pesoRecolectado - pesoPendiente;  
     }
     

@@ -12,21 +12,30 @@ import java.time.LocalDate;
  */
 public class Residuo {
 
-    private int currentId = 0;
+    private static int currentId = 0;
     private int id;
     private String nombre;
     private TipoResiduo tipo;
     private double peso;
     private LocalDate fechaRecoleccion;
     private int prioridad;
+    private Zona zona;
 
-    public Residuo(String nombre, TipoResiduo tipo, double peso){
+    public Residuo(String nombre, TipoResiduo tipo, double peso, ZonaGuayaquil zona){
         id = currentId++;
         this.nombre = nombre;
         this.tipo = tipo;
         this.peso = peso;
         fechaRecoleccion = null;
+        
+        this.zona = ListaZonas.getInstance().buscarPorZonaGuayaquil(zona);
+        
+        if (this.zona != null) {
+            this.zona.setPesoPendiente(this.zona.getPesoPendiente() + peso);
+        }
+        
         System.out.println(this);
+        
     }
     
     public int getId() {
@@ -74,6 +83,13 @@ public class Residuo {
     }
     public void setPrioridad(int n){
         prioridad= n;
+    }
+    
+    public Zona getZona(){
+        return zona;
+    }
+    public void setZona(Zona z){
+        zona = z;
     }
     
     @Override
