@@ -8,6 +8,7 @@ package ecotrack;
  *
  * @author Paúl Rodríguez
  */
+
 public class Zona {
     int pesoPendiente;
     

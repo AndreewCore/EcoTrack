@@ -13,10 +13,20 @@ import java.util.Iterator;
  *
  * @author Dominic Izurrieta & Paúl Rodríguez
  */
+
 public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
     
-    public ListaResiduos() {
+    private static ListaResiduos listaResiduosGlobal;
+    
+    private ListaResiduos() {
         super();
+    }
+    
+    public static ListaResiduos getListaResiduosGlobal(){
+        if (listaResiduosGlobal == null){
+            listaResiduosGlobal = new ListaResiduos();
+        }
+        return listaResiduosGlobal;
     }
 
     // MÉTODOS DE ORDENAMIENTO
@@ -45,7 +55,7 @@ public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
     }
 
     // MÉTODOS DE FILTRADO
-    public ListaResiduos filtrarPorTipo(Residuo.TipoResiduo tipo) {
+    public ListaResiduos filtrarPorTipo(TipoResiduo tipo) {
         ListaResiduos resultado = new ListaResiduos();
 
         for (Residuo residuo : this) {
@@ -131,29 +141,17 @@ public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
         return masPrioritario;
     }
 
-    // PARA JAVAFX - Conversión a ObservableList
-    public javafx.collections.ObservableList<Residuo> toObservableList() {
-        javafx.collections.ObservableList<Residuo> observableList
-                = javafx.collections.FXCollections.observableArrayList();
-
-        for (Residuo residuo : this) {
-            observableList.add(residuo);
-        }
-
-        return observableList;
-    }
-
     // BÚSQUEDAS
-    public Residuo buscarPorId(String id) {
+    public Residuo buscarPorId(int id) {
         for (Residuo residuo : this) {
-            if (residuo.getId().equals(id)) {
+            if (residuo.getId() == id) {
                 return residuo;
             }
         }
         return null;
     }
 
-    public boolean contieneResiduoConId(String id) {
+    public boolean contieneResiduoConId(int id) {
         return buscarPorId(id) != null;
     }
 

@@ -5,6 +5,10 @@
 package controladores;
 
 import ecotrack.Zona;
+import ecotrack.Residuo;
+import ecotrack.TipoResiduo;
+import ecotrack.ListaResiduos;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +32,7 @@ import javafx.stage.Stage;
  *
  * @author Dominic Izurrieta & Paúl Rodríguez
  */
+
 public class ResiduosController implements Initializable{
 
     private Stage stage;
@@ -46,7 +51,7 @@ public class ResiduosController implements Initializable{
     @FXML
     private TextField nombreField;
     @FXML
-    private TextField tipoField;
+    private ChoiceBox<TipoResiduo> tipoChoiceBox;
     @FXML
     private TextField pesoField;
     @FXML
@@ -59,14 +64,18 @@ public class ResiduosController implements Initializable{
     private String[] opcionesFiltrado = {};
     private String[] opcionesOrdenado = {};
     private String[] zonas = {"Fortin / Monte Sinai", "Vergeles", "Sauces / Samanes", "Bastion", "Via a la Costa 1", "Via a la Costa 2", "Urdesa / Kennedy", "San Felipe / Mapasingue", "Samborondon", "Prosperina / Ceibos", "Portete", "Parque Centenario", "Isla Trinitaria", "Isla Mocoli", "Guasmo", "FAE", "Entre Rios / La Puntilla", "Centro"};
+    private TipoResiduo[] tiposResiduo = TipoResiduo.values();
     
     private String nombreResiduo;
-    private String tipoResiduo;
+    private TipoResiduo tipoResiduo;
     private int valorPeso;
     private Zona zonaResiduo;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
+        tipoChoiceBox.getItems().addAll(tiposResiduo);
+        tipoChoiceBox.setOnAction(this::establecerTipo);
+        
         zonaChoiceBox.getItems().addAll(zonas);
         zonaChoiceBox.setOnAction(this::establecerZona);
         
@@ -79,7 +88,10 @@ public class ResiduosController implements Initializable{
     
     public void establecerZona(ActionEvent event){
         String zona = zonaChoiceBox.getValue();
-        System.out.println(zona);
+    }
+    
+    public void establecerTipo(ActionEvent event){
+        tipoResiduo = tipoChoiceBox.getValue();
     }
     
     public void elegirOrdenamiento(ActionEvent event){
@@ -91,21 +103,66 @@ public class ResiduosController implements Initializable{
     }
     
     public void agregarResiduo(ActionEvent event){
+        // Validar nombre
+        if (nombreField.getText() == null || nombreField.getText().isEmpty()){
+            avisoLabel.setText("Por favor, escribir un Nombre para el Residuo");
+            avisoLabel.setTextFill(Color.RED);
+            return;
+        }
+
+        // Validar tipo
+        if (tipoChoiceBox.getValue() == null){
+            avisoLabel.setText("Por favor, elegir un Tipo de Residuo");
+            avisoLabel.setTextFill(Color.RED);
+            return;
+        }
+
+        // Validar zona
+        if (zonaChoiceBox.getValue() == null){
+            avisoLabel.setText("Por favor, elegir una Zona");
+            avisoLabel.setTextFill(Color.RED);
+            return;
+        }
+
         try{
             valorPeso = Integer.parseInt(pesoField.getText());
+
+            if (valorPeso <= 0) {
+                avisoLabel.setText("El peso debe ser mayor a 0");
+                avisoLabel.setTextFill(Color.RED);
+                return;
+            }
+
+            nombreResiduo = nombreField.getText();
+            tipoResiduo = tipoChoiceBox.getValue();
+            
+
+            Residuo r = new Residuo(nombreResiduo, tipoResiduo, valorPeso);
+            ListaResiduos.getListaResiduosGlobal().addLast(r);
+
+            avisoLabel.setText("Se agregó el Residuo Exitosamente");
+            avisoLabel.setTextFill(Color.GREEN);
+
+            // Limpiar campos después de agregar exitosamente
+            limpiarCampos();
+
         }
         catch (NumberFormatException e){
             avisoLabel.setText("Por favor, solo ingrese números en Peso");
             avisoLabel.setTextFill(Color.RED);
         }
         catch (Exception e){
-            avisoLabel.setText(e.getMessage());
+            avisoLabel.setText("Error: " + e.getMessage());
+            avisoLabel.setTextFill(Color.RED);
         }
-        nombreResiduo = nombreField.getText();
-        tipoResiduo = tipoField.getText();
-        System.out.println(valorPeso);
-        System.out.println(nombreResiduo);
-        System.out.println(tipoResiduo);
+    }
+
+    // Método auxiliar para limpiar campos
+    private void limpiarCampos() {
+        nombreField.clear();
+        pesoField.clear();
+        tipoChoiceBox.setValue(null);
+        zonaChoiceBox.setValue(null);
     }
     
     @FXML

@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
     private DoublyNodeList<E> last;
-    private DoublyNodeList<E> header = last.getNext();
+    private DoublyNodeList<E> header;
 	
     public CircularDoublyLinkedList() {
         this.last = null;
@@ -67,6 +67,8 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             last.setNext(second);
             second.setPrev(last);
         }
+        
+        header = last.getNext();
         return content;
     }
 
@@ -88,6 +90,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             last = newLast;
         }
 
+        header = last.getNext();
         return content;
     }
 
@@ -116,6 +119,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
         prevNode.setNext(nextNode);
         nextNode.setPrev(prevNode);
 
+        header = last.getNext();
         return content;
     }
 
@@ -135,6 +139,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             first.setPrev(newNode);
             last.setNext(newNode);
         }
+        header = last.getNext();
 
         return true;
     }
@@ -148,6 +153,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             newNode.setNext(newNode);
             newNode.setPrev(newNode);
             last = newNode;
+            header = last.getNext();
         } else {
             DoublyNodeList<E> first = last.getNext();
             newNode.setNext(first);
@@ -155,6 +161,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
             last.setNext(newNode);
             first.setPrev(newNode);
             last = newNode;
+            header = last.getNext();
         }
 
         return true;
@@ -188,6 +195,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
         newNode.setPrev(prevNode);
         prevNode.setNext(newNode);
         actual.setPrev(newNode);
+        header = last.getNext();
     }
 
     @Override
@@ -203,6 +211,7 @@ public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E>{
 
         E oldContent = actual.getContent();
         actual.setContent(element);
+        header = last.getNext();
         return oldContent;
     }
     
