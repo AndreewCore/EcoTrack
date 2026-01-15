@@ -12,18 +12,37 @@ import java.time.LocalDate;
  */
 public class Residuo {
 
-    private String id;
+    private static int currentId = 0;
+    private int id;
     private String nombre;
     private TipoResiduo tipo;
     private double peso;
     private LocalDate fechaRecoleccion;
     private int prioridad;
+    private Zona zona;
 
-    public String getId() {
+    public Residuo(String nombre, TipoResiduo tipo, double peso, ZonaGuayaquil zona){
+        id = currentId++;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.peso = peso;
+        fechaRecoleccion = null;
+        
+        this.zona = ListaZonas.getInstance().buscarPorZonaGuayaquil(zona);
+        
+        if (this.zona != null) {
+            this.zona.setPesoPendiente(this.zona.getPesoPendiente() + peso);
+        }
+        
+        System.out.println(this);
+        
+    }
+    
+    public int getId() {
         return id;
     }
 
-    public void setId(String n) {
+    public void setId(int n) {
         id = n;
     }
 
@@ -62,19 +81,24 @@ public class Residuo {
     public int getPrioridad() {
         return prioridad;
     }
-    public void setPriorida(int n){
+    public void setPrioridad(int n){
         prioridad= n;
     }
-
-    public enum TipoResiduo {
-        ORGANICO,
-        PLASTICO,
-        VIDRIO,
-        PAPEL,
-        METAL,
-        ELECTRONICO,
-        PELIGROSO,
-        OTROS
+    
+    public Zona getZona(){
+        return zona;
+    }
+    public void setZona(Zona z){
+        zona = z;
+    }
+    
+    @Override
+    public String toString(){
+        if (fechaRecoleccion != null){
+            return nombre + " de tipo: " + tipo.toString() + " con un peso de: " + peso + " recolectado el: " + fechaRecoleccion;
+        } else {
+            return nombre + " de tipo: " + tipo.toString() + " con un peso de: " + peso + " NOTA: Aun no ha sido procesado.";
+        }
     }
 
 }

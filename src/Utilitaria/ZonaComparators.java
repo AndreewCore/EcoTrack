@@ -15,7 +15,7 @@ public class ZonaComparators {
     public static Comparator<Zona> porVolumenResiduos(){
         return (o1, o2) -> {
             if (o1 == null || o2 == null) return 0;
-            return Integer.compare(o1.getPesoPendiente(), o2.getPesoPendiente());
+            return Double.compare(o1.getPesoPendiente(), o2.getPesoPendiente());
         };
     }
 }
