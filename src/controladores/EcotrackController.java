@@ -30,6 +30,11 @@ public class EcotrackController {
     private ImageView mainSceneView;
     
     @FXML
+    private Button descargarButton;
+    @FXML
+    private Button subirButton;
+    
+    @FXML
     private Button residuosButton;
     @FXML
     private Button zonasButton;
@@ -37,6 +42,18 @@ public class EcotrackController {
     private Button centroReciclajeButton;
     @FXML
     private Button estadisticasButton;
+    
+    @FXML
+    private void subirDatos(ActionEvent event) throws IOException{
+        //TO-DO
+        return;
+    }
+    
+    @FXML
+    private void descargarDatos(ActionEvent event) throws IOException{
+        //TO-DO
+        return;
+    }
     
     @FXML
     private void switchToSceneResiduos(ActionEvent event) throws IOException{
