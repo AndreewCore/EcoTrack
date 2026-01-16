@@ -120,6 +120,64 @@ public class ResiduosController implements Initializable {
     public void elegirFiltrado(ActionEvent event) {
         filtrado = filtradoChoiceBox.getValue();
     }
+     @FXML
+    private void aplicarOrdenamiento(ActionEvent event) {
+        String seleccion = ordenamientoChoiceBox.getValue();
+        if (seleccion == null) {
+            return;
+        }
+
+        try {
+            switch (seleccion) {
+                case "Peso (Ascendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorPeso();
+                    avisoLabel.setText("Ordenado por Peso (Ascendente)");
+                    break;
+                case "Peso (Descendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorPesoDescendente();
+                    avisoLabel.setText("Ordenado por Peso (Descendente)");
+                    break;
+                case "Tipo (Ascendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorTipo();
+                    avisoLabel.setText("Ordenado por Tipo (Ascendente)");
+                    break;
+                case "Tipo (Descendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorTipoDescendente();
+                    avisoLabel.setText("Ordenado por Tipo (Descendente)");
+                    break;
+                case "Prioridad (Ascendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorPrioridad();
+                    avisoLabel.setText("Ordenado por Prioridad (Ascendente)");
+                    break;
+                case "Prioridad (Descendente)":
+                    ListaResiduos.getListaResiduosGlobal().ordenarPorPrioridadDescendente();
+                    avisoLabel.setText("Ordenado por Prioridad (Descendente)");
+                    break;
+            }
+            avisoLabel.setTextFill(Color.BLUE);
+            actualizarVista();
+        } catch (Exception e) {
+            avisoLabel.setText("Error al ordenar: " + e.getMessage());
+            avisoLabel.setTextFill(Color.RED);
+        }
+    }
+
+    // Método para actualizar toda la vista
+    private void actualizarVista() {
+        // Limpiar todas las listas
+        nombreShownListView.getItems().clear();
+        tipoShownListView.getItems().clear();
+        pesoShownListView.getItems().clear();
+        zonaShownListView.getItems().clear();
+
+        // Agregar todos los residuos en el orden actual
+        for (Residuo r : ListaResiduos.getListaResiduosGlobal()) {
+            nombreShownListView.getItems().add(r.getNombre());
+            tipoShownListView.getItems().add(r.getTipo());
+            pesoShownListView.getItems().add(r.getPeso());
+            zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
+        }
+    }
 
     public void agregarResiduo(ActionEvent event) {
         // Validar nombre

@@ -20,7 +20,7 @@
       <TextField fx:id="nombreField" layoutX="49.0" layoutY="503.0" prefHeight="25.0" prefWidth="721.0" />
       <TextField fx:id="pesoField" layoutX="49.0" layoutY="646.0" prefHeight="25.0" prefWidth="721.0" />
       <Button fx:id="agregarResiduoButton" layoutX="1109.0" layoutY="423.0" mnemonicParsing="false" onAction="#agregarResiduo" opacity="0.0" prefHeight="297.0" prefWidth="147.0" text="Button" />
-      <ChoiceBox fx:id="ordenamientoChoiceBox" layoutX="27.0" layoutY="222.0" prefHeight="44.0" prefWidth="350.0" />
+      <ChoiceBox id="ordenamientoChoiceBox" fx:id="ordenamientoChoiceBox" layoutX="27.0" layoutY="222.0" prefHeight="44.0" prefWidth="350.0" />
       <ChoiceBox fx:id="filtradoChoiceBox" layoutX="27.0" layoutY="350.0" prefHeight="44.0" prefWidth="350.0" />
       <ChoiceBox fx:id="zonaChoiceBox" layoutX="809.0" layoutY="506.0" prefHeight="25.0" prefWidth="263.0" />
       <Label fx:id="avisoLabel" layoutX="49.0" layoutY="689.0" prefHeight="17.0" prefWidth="721.0" />
