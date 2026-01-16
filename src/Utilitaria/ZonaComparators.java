@@ -11,6 +11,7 @@ import java.util.Comparator;
  *
  * @author Paúl Rodríguez
  */
+//lalo
 public class ZonaComparators {
     public static Comparator<Zona> porVolumenResiduos(){
         return (o1, o2) -> {
