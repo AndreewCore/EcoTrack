@@ -72,7 +72,13 @@ public class ResiduosController implements Initializable {
     private ChoiceBox<ZonaGuayaquil> zonaChoiceBox;
 
     private String[] opcionesFiltrado = {};
-    private String[] opcionesOrdenado = {};
+    private String[] opcionesOrdenamiento = {
+    "Peso (Ascendente)",
+        "Peso (Descendente)",
+        "Tipo (Ascendente)",
+        "Tipo (Descendente)",
+        "Prioridad (Ascendente)",
+        "Prioridad (Descendente)"};
 
     private String ordenamiento;
     private String filtrado;
@@ -87,13 +93,22 @@ public class ResiduosController implements Initializable {
         tipoChoiceBox.getItems().addAll(TipoResiduo.values());
         tipoChoiceBox.setOnAction(this::establecerTipo);
 
-        zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
-        zonaChoiceBox.setOnAction(this::establecerZona);
+         zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
+        zonaChoiceBox.setOnAction(this::establecerZona); 
 
-        ordenamientoChoiceBox.getItems().addAll(opcionesOrdenado);
-        ordenamientoChoiceBox.setOnAction(this::elegirOrdenamiento);
+       ordenamientoChoiceBox.getItems().addAll(opcionesOrdenamiento);
+        ordenamientoChoiceBox.setOnAction(this::aplicarOrdenamiento);
+        
+        if (filtradoChoiceBox != null) {
+            filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
+            filtradoChoiceBox.setOnAction(this::elegirFiltrado);
+        }
+        
+        // Cargar datos iniciales
+        actualizarVista();
+    
 
-        filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
+      /* filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
         filtradoChoiceBox.setOnAction(this::elegirFiltrado);
 
         for (Residuo r : ListaResiduos.getListaResiduosGlobal()) {
@@ -102,7 +117,7 @@ public class ResiduosController implements Initializable {
             pesoShownListView.getItems().add(r.getPeso());
             zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
         }
-
+*/
     }
 
     public void establecerZona(ActionEvent event) {
