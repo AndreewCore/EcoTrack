@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package controladores;
 
 import ecotrack.Zona;
@@ -29,11 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Dominic Izurrieta & Paúl Rodríguez
- */
 public class ResiduosController implements Initializable {
 
     private Stage stage;
@@ -71,15 +62,28 @@ public class ResiduosController implements Initializable {
     @FXML
     private ChoiceBox<ZonaGuayaquil> zonaChoiceBox;
 
-    private String[] opcionesFiltrado = {};
+    private String[] opcionesFiltrado = {
+        "Todos",
+        "ORGANICO",
+        "PLASTICO",
+        "VIDRIO",
+        "PAPEL",
+        "METAL",
+        "ELECTRONICO",
+        "PELIGROSO",
+        "OTROS"
+    };
+    
     private String[] opcionesOrdenamiento = {
-    "Peso (Ascendente)",
+        "Peso (Ascendente)",
         "Peso (Descendente)",
         "Tipo (Ascendente)",
         "Tipo (Descendente)",
         "Prioridad (Ascendente)",
-        "Prioridad (Descendente)"};
-
+        "Prioridad (Descendente)"
+    };
+    
+    private String filtroActual = "Todos";
     private String ordenamiento;
     private String filtrado;
 
@@ -90,52 +94,48 @@ public class ResiduosController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        // Configurar ChoiceBox de tipo
         tipoChoiceBox.getItems().addAll(TipoResiduo.values());
         tipoChoiceBox.setOnAction(this::establecerTipo);
 
-         zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
-        zonaChoiceBox.setOnAction(this::establecerZona); 
-
-       ordenamientoChoiceBox.getItems().addAll(opcionesOrdenamiento);
-        ordenamientoChoiceBox.setOnAction(this::aplicarOrdenamiento);
+        // Configurar ChoiceBox de zona
+        zonaChoiceBox.getItems().addAll(ZonaGuayaquil.values());
+        zonaChoiceBox.setOnAction(this::establecerZona);
         
-        if (filtradoChoiceBox != null) {
-            filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
-            filtradoChoiceBox.setOnAction(this::elegirFiltrado);
-        }
+        // Configurar ChoiceBox de filtrado - ¡SOLO UNA VEZ!
+        filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
+        filtradoChoiceBox.setOnAction(this::aplicarFiltrado);
+        filtradoChoiceBox.setValue("Todos");
+        
+        // Configurar ChoiceBox de ordenamiento
+        ordenamientoChoiceBox.getItems().addAll(opcionesOrdenamiento);
+        ordenamientoChoiceBox.setOnAction(this::aplicarOrdenamiento);
         
         // Cargar datos iniciales
         actualizarVista();
-    
-
-      /* filtradoChoiceBox.getItems().addAll(opcionesFiltrado);
-        filtradoChoiceBox.setOnAction(this::elegirFiltrado);
-
-        for (Residuo r : ListaResiduos.getListaResiduosGlobal()) {
-            nombreShownListView.getItems().add(r.getNombre());
-            tipoShownListView.getItems().add(r.getTipo());
-            pesoShownListView.getItems().add(r.getPeso());
-            zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
-        }
-*/
     }
 
     public void establecerZona(ActionEvent event) {
         zonaResiduo = zonaChoiceBox.getValue();
+        System.out.println("DEBUG: Zona seleccionada: " + zonaResiduo);
     }
 
     public void establecerTipo(ActionEvent event) {
         tipoResiduo = tipoChoiceBox.getValue();
+        System.out.println("DEBUG: Tipo seleccionado: " + tipoResiduo);
     }
 
     public void elegirOrdenamiento(ActionEvent event) {
         ordenamiento = ordenamientoChoiceBox.getValue();
+        System.out.println("DEBUG: Ordenamiento seleccionado: " + ordenamiento);
     }
 
     public void elegirFiltrado(ActionEvent event) {
         filtrado = filtradoChoiceBox.getValue();
+        System.out.println("DEBUG: Filtrado seleccionado: " + filtrado);
     }
-     @FXML
+
+    @FXML
     private void aplicarOrdenamiento(ActionEvent event) {
         String seleccion = ordenamientoChoiceBox.getValue();
         if (seleccion == null) {
@@ -174,24 +174,79 @@ public class ResiduosController implements Initializable {
         } catch (Exception e) {
             avisoLabel.setText("Error al ordenar: " + e.getMessage());
             avisoLabel.setTextFill(Color.RED);
+            e.printStackTrace();
         }
     }
 
-    // Método para actualizar toda la vista
-    private void actualizarVista() {
-        // Limpiar todas las listas
-        nombreShownListView.getItems().clear();
-        tipoShownListView.getItems().clear();
-        pesoShownListView.getItems().clear();
-        zonaShownListView.getItems().clear();
-
-        // Agregar todos los residuos en el orden actual
-        for (Residuo r : ListaResiduos.getListaResiduosGlobal()) {
-            nombreShownListView.getItems().add(r.getNombre());
-            tipoShownListView.getItems().add(r.getTipo());
-            pesoShownListView.getItems().add(r.getPeso());
-            zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
+    @FXML  // ← ¡FALTA ESTA ANOTACIÓN!
+    private void aplicarFiltrado(ActionEvent event) {
+        String filtroSeleccionado = filtradoChoiceBox.getValue();
+        
+        if (filtroSeleccionado == null) {
+            filtroActual = "Todos";
+        } else {
+            filtroActual = filtroSeleccionado;
         }
+        
+        System.out.println("DEBUG: Filtro seleccionado: " + filtroActual);
+        actualizarVista();
+    }
+    
+    private ListaResiduos obtenerListaFiltrada() {
+        System.out.println("DEBUG: Obteniendo lista filtrada para: " + filtroActual);
+        
+        if (filtroActual == null || filtroActual.equals("Todos")) {
+            System.out.println("DEBUG: Mostrando TODOS los residuos");
+            return ListaResiduos.getListaResiduosGlobal();
+        }
+        
+        try {
+            TipoResiduo tipoFiltro = null;
+            
+            // Verifica qué tipo de filtro es
+            switch (filtroActual) {
+                case "ORGANICO":
+                    tipoFiltro = TipoResiduo.ORGANICO;
+                    break;
+                case "PLASTICO":
+                    tipoFiltro = TipoResiduo.PLASTICO;
+                    break;
+                case "VIDRIO":
+                    tipoFiltro = TipoResiduo.VIDRIO;
+                    break;
+                case "METAL":
+                    tipoFiltro = TipoResiduo.METAL;
+                    break;
+                case "ELECTRONICO":
+                    tipoFiltro = TipoResiduo.ELECTRONICO;
+                    break;
+                case "PAPEL":
+                    tipoFiltro = TipoResiduo.PAPEL;  // Si existe en tu enum
+                    break;
+                case "PELIGROSO":
+                    tipoFiltro = TipoResiduo.PELIGROSO;  // Si existe en tu enum
+                    break;
+                case "OTROS":
+                    tipoFiltro = TipoResiduo.OTROS;  // Si existe en tu enum
+                    break;
+                default:
+                    System.out.println("DEBUG: Filtro no reconocido: " + filtroActual);
+                    return ListaResiduos.getListaResiduosGlobal();
+            }
+            
+            if (tipoFiltro != null) {
+                System.out.println("DEBUG: Filtrando por tipo: " + tipoFiltro);
+                ListaResiduos resultado = ListaResiduos.getListaResiduosGlobal().filtrarPorTipo(tipoFiltro);
+                System.out.println("DEBUG: Encontrados " + resultado.size() + " residuos");
+                return resultado;
+            }
+            
+        } catch (Exception e) {
+            System.err.println("ERROR en filtrado: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return ListaResiduos.getListaResiduosGlobal();
     }
 
     public void agregarResiduo(ActionEvent event) {
@@ -236,12 +291,9 @@ public class ResiduosController implements Initializable {
 
             // Limpiar campos después de agregar exitosamente
             limpiarCampos();
-
-            Residuo nuevo = ListaResiduos.getListaResiduosGlobal().getLast();
-            nombreShownListView.getItems().add(nuevo.getNombre());
-            tipoShownListView.getItems().add(nuevo.getTipo());
-            pesoShownListView.getItems().add(nuevo.getPeso());
-            zonaShownListView.getItems().add(nuevo.getZona().getZonaGuayaquil());
+            
+            // ¡IMPORTANTE! Usar actualizarVista() en lugar de agregar manualmente
+            actualizarVista();  // ← CORREGIDO
 
         } catch (NumberFormatException e) {
             avisoLabel.setText("Por favor, solo ingrese números en Peso");
@@ -249,8 +301,8 @@ public class ResiduosController implements Initializable {
         } catch (Exception e) {
             avisoLabel.setText("Error: " + e.getMessage());
             avisoLabel.setTextFill(Color.RED);
+            e.printStackTrace();
         }
-
     }
 
     // Método auxiliar para limpiar campos
@@ -270,4 +322,41 @@ public class ResiduosController implements Initializable {
         stage.show();
     }
 
+    private void actualizarVista() {
+        // Limpiar todas las listas
+        nombreShownListView.getItems().clear();
+        tipoShownListView.getItems().clear();
+        pesoShownListView.getItems().clear();
+        zonaShownListView.getItems().clear();
+        
+        // Obtener lista filtrada
+        ListaResiduos listaFiltrada = obtenerListaFiltrada();
+        
+        // DEPURACIÓN: Mostrar en consola
+        System.out.println("=== ACTUALIZAR VISTA ===");
+        System.out.println("Filtro actual: " + filtroActual);
+        System.out.println("Total residuos en lista global: " + ListaResiduos.getListaResiduosGlobal().size());
+        System.out.println("Residuos después de filtrar: " + listaFiltrada.size());
+        
+        // Mostrar cada residuo filtrado en consola
+        int contador = 1;
+        for (Residuo r : listaFiltrada) {
+            System.out.println(contador + ". " + r.getNombre() + " - Tipo: " + r.getTipo());
+            contador++;
+            
+            // Agregar a las listas de la interfaz
+            nombreShownListView.getItems().add(r.getNombre());
+            tipoShownListView.getItems().add(r.getTipo());
+            pesoShownListView.getItems().add(r.getPeso());
+            zonaShownListView.getItems().add(r.getZona().getZonaGuayaquil());
+        }
+        
+        // Actualizar label informativo
+        if (!filtroActual.equals("Todos")) {
+            avisoLabel.setText("Mostrando " + listaFiltrada.size() + " residuos de tipo: " + filtroActual);
+        } else {
+            avisoLabel.setText("Mostrando todos los residuos (" + listaFiltrada.size() + " total)");
+        }
+        avisoLabel.setTextFill(Color.BLUE);
+    }
 }

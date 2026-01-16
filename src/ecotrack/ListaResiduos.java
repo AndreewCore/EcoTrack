@@ -13,17 +13,16 @@ import java.util.Iterator;
  *
  * @author Dominic Izurrieta & Paúl Rodríguez
  */
-
 public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
-    
+
     private static ListaResiduos listaResiduosGlobal;
-    
+
     private ListaResiduos() {
         super();
     }
-    
-    public static ListaResiduos getListaResiduosGlobal(){
-        if (listaResiduosGlobal == null){
+
+    public static ListaResiduos getListaResiduosGlobal() {
+        if (listaResiduosGlobal == null) {
             listaResiduosGlobal = new ListaResiduos();
         }
         return listaResiduosGlobal;
@@ -49,7 +48,7 @@ public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
     public void ordenarPorTipo() {
         sort(ResiduoComparators.porTipo());
     }
-    
+
     public void ordenarPorTipoDescendente() {
         sort(ResiduoComparators.porTipo().reversed());
     }
@@ -178,5 +177,56 @@ public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    public ListaResiduos filtrarPorPrioridadMaxima(int prioridadMaxima) {
+        ListaResiduos resultado = new ListaResiduos();
+        for (Residuo residuo : this) {
+            if (residuo.getPrioridad() <= prioridadMaxima) {
+                resultado.addLast(residuo);
+            }
+        }
+        return resultado;
+    }
+
+    public ListaResiduos filtrarPorPrioridadRango(int min, int max) {
+        ListaResiduos resultado = new ListaResiduos();
+        for (Residuo residuo : this) {
+            if (residuo.getPrioridad() >= min && residuo.getPrioridad() <= max) {
+                resultado.addLast(residuo);
+            }
+        }
+        return resultado;
+    }
+
+    public ListaResiduos filtrarPorNoProcesados() {
+        ListaResiduos resultado = new ListaResiduos();
+        for (Residuo residuo : this) {
+            if (residuo.getFechaRecoleccion() == null) {
+                resultado.addLast(residuo);
+            }
+        }
+        return resultado;
+    }
+
+    public ListaResiduos filtrarPorProcesados() {
+        ListaResiduos resultado = new ListaResiduos();
+        for (Residuo residuo : this) {
+            if (residuo.getFechaRecoleccion() != null) {
+                resultado.addLast(residuo);
+            }
+        }
+        return resultado;
+    }
+
+    // Método para filtrar por zona
+    public ListaResiduos filtrarPorZona(ZonaGuayaquil zona) {
+        ListaResiduos resultado = new ListaResiduos();
+        for (Residuo residuo : this) {
+            if (residuo.getZona().getZonaGuayaquil() == zona) {
+                resultado.addLast(residuo);
+            }
+        }
+        return resultado;
     }
 }

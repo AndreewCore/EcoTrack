@@ -25,11 +25,9 @@
       <ChoiceBox fx:id="zonaChoiceBox" layoutX="809.0" layoutY="506.0" prefHeight="25.0" prefWidth="263.0" />
       <Label fx:id="avisoLabel" layoutX="49.0" layoutY="689.0" prefHeight="17.0" prefWidth="721.0" />
       <ChoiceBox fx:id="tipoChoiceBox" layoutX="49.0" layoutY="572.0" prefHeight="25.0" prefWidth="721.0" />
-      <ListView fx:id="nombreShownListView" layoutX="429.0" layoutY="66.0" prefHeight="225.0" prefWidth="188.0" />
-      <ListView fx:id="tipoShownListView" layoutX="639.0" layoutY="66.0" prefHeight="225.0" prefWidth="168.0" />
-      <ListView fx:id="pesoShownListView" layoutX="826.0" layoutY="66.0" prefHeight="225.0" prefWidth="135.0" />
-      <ListView fx:id="zonaShownListView" layoutX="977.0" layoutY="66.0" prefHeight="225.0" prefWidth="252.0" />
-      <Button fx:id="goBackButton" layoutX="421.0" layoutY="325.0" mnemonicParsing="false" opacity="0.0" prefHeight="82.0" prefWidth="398.0" text="Button" />
-      <Button fx:id="goForwardButton" layoutX="840.0" layoutY="325.0" mnemonicParsing="false" opacity="0.0" prefHeight="82.0" prefWidth="398.0" text="Button" />
+      <ListView fx:id="nombreShownListView" layoutX="429.0" layoutY="66.0" prefHeight="315.0" prefWidth="166.0" />
+      <ListView fx:id="tipoShownListView" layoutX="639.0" layoutY="66.0" prefHeight="315.0" prefWidth="168.0" />
+      <ListView fx:id="pesoShownListView" layoutX="826.0" layoutY="66.0" prefHeight="315.0" prefWidth="135.0" />
+      <ListView fx:id="zonaShownListView" layoutX="977.0" layoutY="66.0" prefHeight="315.0" prefWidth="252.0" />
    </children>
 </AnchorPane>
