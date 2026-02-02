@@ -15,9 +15,9 @@ import java.util.Iterator;
  */
 public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
 
-    private static ListaResiduos listaResiduosGlobal;
+    public static ListaResiduos listaResiduosGlobal;
 
-    private ListaResiduos() {
+    public ListaResiduos() {
         super();
     }
 
