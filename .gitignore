@@ -1,3 +1,9 @@
 /nbproject/private/
 /build/
 /dist/
+
+# Instrucciones locales de Claude Code — no versionar
+CLAUDE.md
+
+# Artefactos transitorios de herramientas
+.projstatus
