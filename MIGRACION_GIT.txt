@@ -1,0 +1,124 @@
+================================================================
+MIGRACIÓN DE ESTRUCTURA GIT + PLAN DE TRASPASO
+Proyecto: EcoTrack
+De:  Java + JavaFX (monoproyecto NetBeans/Ant)
+A:   Java (Spring Boot) + React + Leaflet (monorepo)
+Fecha: 2026-07-05
+================================================================
+
+1. MODELO DE RAMAS ADOPTADO
+----------------------------------------------------------------
+Flujo estricto, forward-only, solo por Pull Request:
+
+    feature/* ──PR──▶ dev ──PR──▶ staging ──PR──▶ main
+
+  - main     : producción. Solo recibe releases.
+  - staging  : ensayo de release; últimos ajustes antes de prod.
+  - dev      : integración de features (rama por defecto del repo).
+  - feature/*: efímeras, una por cambio; nacen de dev y vuelven a dev.
+
+Estrategia de merge:
+  - feature -> dev     : SQUASH (un commit limpio por feature).
+  - dev -> staging     : MERGE COMMIT (preserva el límite de promoción).
+  - staging -> main    : MERGE COMMIT + TAG de release (vX.Y.Z).
+
+Reglas:
+  - Promoción de una sola vía; nunca hacia atrás.
+  - Nunca commits directos a dev / staging / main (solo vía PR).
+  - Los hotfixes NO tienen ruta especial: se hacen en feature/*
+    desde dev y se promueven por el pipeline normal.
+
+2. ESTADO EJECUTADO (2026-07-05)
+----------------------------------------------------------------
+Bootstrap realizado sobre el repo AndreewCore/EcoTrack:
+
+  [x] Paso 1 - Creadas dev, staging y main desde el commit 91097f2
+              (todas idénticas al inicio) y pusheadas al remoto.
+  [x] Paso 2 - dev fijada como rama por defecto en GitHub
+              (destino por defecto de los PRs).
+  [ ] Paso 3 - OMITIDO a propósito: las ramas personales no se
+              fusionaron (se eliminaron sin rescatar nada).
+  [x] Paso 4 - Retirada master: borrada en remoto y en local;
+              HEAD del remoto apunta ahora a dev.
+  [x]         - Eliminadas las ramas personales en el remoto:
+              Dieg, dom, nuevoDom, Respaldo_Dominic.
+  [x] Paso 5 - Branch protection en main, staging y dev:
+              se exige PR y se bloquea el push directo
+              (enforce_admins = true; 0 aprobaciones requeridas
+              para permitir flujo en solitario).
+  [x] Paso 6 - Tag anotado v0.0.0 en main = línea base JavaFX
+              antes de la migración.
+
+Estado final del remoto:
+  - Rama por defecto: dev
+  - Ramas: dev (protegida), staging (protegida), main (protegida),
+           feature/monorepo-layout (sin proteger)
+  - Tags: v0.0.0
+
+NOTA: v0.0.0 se creó apuntando al último commit JavaFX. Si en el
+futuro se quiere una convención más explícita, se puede añadir un
+tag alias tipo "javafx-final" sobre el mismo commit.
+
+3. ESTRUCTURA DE CARPETAS OBJETIVO (MONOREPO)
+----------------------------------------------------------------
+  EcoTrack/
+  ├── backend/       # Java: dominio + TDA + persistencia
+  │   │              #  -> migrar de Ant/NetBeans a Maven + Spring Boot
+  │   ├── src/       #  (aquí se mueve el src/ actual)
+  │   └── pom.xml
+  ├── frontend/      # React + TypeScript + Leaflet (Vite, gestor: pnpm)
+  │   ├── src/
+  │   ├── package.json
+  │   └── pnpm-lock.yaml   # lockfile de pnpm (se commitea; no usar npm)
+  ├── docs/          # ANALISIS.txt, PLAN_APRENDIZAJE.txt, este archivo
+  └── README.md
+
+  Gestor de paquetes del frontend: pnpm (no npm). Elegido por
+  instalaciones rápidas/ordenadas (node_modules estricto + almacén
+  con enlaces duros) e instalación determinista vía pnpm-lock.yaml.
+  Regla: no mezclar npm y pnpm en el mismo proyecto (evita lockfiles
+  duplicados). Los comandos de PLAN_APRENDIZAJE.txt asumen pnpm.
+
+4. PIPELINE DE MIGRACIÓN POR FEATURES (PENDIENTE)
+----------------------------------------------------------------
+Cada paso = una rama feature/* desde dev, PR a dev (squash),
+luego promoción dev->staging->main con tag de release.
+
+  Rama                          Qué hace                     Release
+  ---------------------------   --------------------------   -------
+  feature/monorepo-layout   *   Mover Java a backend/,          -
+                                crear frontend/                (CREADA,
+                                                                vacía)
+  feature/maven-migration       Ant/NetBeans -> Maven          v0.1.0
+                                (desatar del JDK_25)
+  feature/rest-api              Spring Boot: dominio y zonas    v0.2.0
+                                como JSON / GeoJSON
+  feature/frontend-scaffold     Vite + React + TS base           -
+  feature/map-leaflet           Mapa Guayaquil + zonas GeoJSON  v0.3.0
+  feature/residuos-crud         CRUD de residuos contra la API  v0.4.0
+  feature/remove-javafx         Eliminar UI JavaFX al lograr    v1.0.0
+                                paridad en React
+
+Encaje con el aprendizaje: cada fase de PLAN_APRENDIZAJE.txt
+produce (aproximadamente) una de estas ramas.
+
+5. PENDIENTES INMEDIATOS
+----------------------------------------------------------------
+  - Comenzar el plan de estudio (PLAN_APRENDIZAJE.txt), Fase 0.
+  - NO se ha generado código todavía (decisión explícita).
+  - La rama feature/monorepo-layout existe pero está vacía;
+    el traspaso real de carpetas se hará cuando se decida arrancar.
+
+6. RECORDATORIO DE FLUJO DE TRABAJO DIARIO
+----------------------------------------------------------------
+  # empezar una feature
+  git checkout dev && git pull
+  git checkout -b feature/<desc>
+  # ...trabajar y commitear...
+  git push -u origin feature/<desc>
+  # abrir PR hacia dev (squash al mergear)
+
+  # promover (cuando dev esté listo)
+  PR dev -> staging   (merge commit)
+  PR staging -> main  (merge commit) + tag vX.Y.Z
+================================================================

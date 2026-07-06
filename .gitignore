@@ -1,3 +1,6 @@
 /nbproject/private/
 /build/
 /dist/
+
+# Artefactos transitorios de herramientas
+.projstatus
