@@ -25,7 +25,7 @@ resto del dominio depende directamente de ellas. Esta rama `main` conserva la
 
 ## Cómo funciona (arquitectura)
 
-El código fuente en `src/` se organiza en cuatro capas:
+El código fuente en `backend/src/` se organiza en cuatro capas:
 
 | Capa | Paquete | Rol |
 |------|---------|-----|
@@ -34,7 +34,7 @@ El código fuente en `src/` se organiza en cuatro capas:
 | Interfaz | `controladores/` | Controladores JavaFX, uno por pantalla (`Ecotrack`, `Residuos`, `Zonas`, `CentroReciclaje`, `Estadisticas`). |
 | Utilidades | `Utilitaria/` | Apoyo transversal: `DataManager` (persistencia), comparadores, `ResiduoIterator`. |
 
-- Las **vistas** (`src/vistas/*.fxml`) y las **imágenes** (`src/images/`) se
+- Las **vistas** (`backend/src/vistas/*.fxml`) y las **imágenes** (`backend/src/images/`) se
   cargan por ruta de recurso (p. ej. `/vistas/ecotrack.fxml`, `/images/icon.png`).
 - El **almacén central de datos** es un singleton mutable global:
   `ListaResiduos.getListaResiduosGlobal()` devuelve una
@@ -46,7 +46,7 @@ El código fuente en `src/` se organiza en cuatro capas:
 
 Ambos están fijados de forma estricta en la configuración del proyecto:
 
-- **JDK 25** — `nbproject/project.properties` fija
+- **JDK 25** — `backend/nbproject/project.properties` fija
   `javac.source=25`, `javac.target=25`, `platform.active=JDK_25`.
 - **JavaFX SDK externo** (no viene empaquetado). Los argumentos de ejecución
   apuntan a `--module-path <ruta>/javafx-sdk-25.0.2/lib --add-modules
@@ -55,10 +55,11 @@ Ambos están fijados de forma estricta en la configuración del proyecto:
 
 ## Compilar y ejecutar
 
-El proyecto se construye con **NetBeans Ant** (`build.xml` delega en
-`nbproject/build-impl.xml`). El punto de entrada es `ecotrack.Main`.
+El proyecto se construye con **NetBeans Ant** desde `backend/` (`build.xml`
+delega en `nbproject/build-impl.xml`). El punto de entrada es `ecotrack.Main`.
 
 ```bash
+cd backend
 ant compile      # compila a build/
 ant run          # compila + lanza la app JavaFX
 ant jar          # empaqueta dist/EcoTrack.jar
@@ -66,6 +67,15 @@ ant clean        # elimina build/ y dist/
 ```
 
 > No hay pruebas automatizadas en el repositorio (no hay JUnit ni fuentes `test/`).
+
+---
+
+## Estructura del repositorio
+
+| Carpeta | Contenido |
+|---------|-----------|
+| `backend/` | Aplicación Java (hoy JavaFX con Ant; pasará a Spring Boot + Maven). |
+| `frontend/` | Futuro cliente React + TypeScript + Leaflet (vacío por ahora). |
 
 ---
 
@@ -82,7 +92,5 @@ ant clean        # elimina build/ y dist/
 > - **Frontend** — React + TypeScript con **Leaflet** para el mapa interactivo
 >   de Guayaquil (reemplaza el intercambio de imágenes PNG por zonas coloreables).
 >
-> El plan de ramas y el análisis del código están documentados en
-> `MIGRACION_GIT.txt` y `ANALISIS.txt`.
 > El desarrollo sigue un modelo de ramas estricto, forward-only y solo por Pull
 > Request: `feature/* → dev → staging → main`.
