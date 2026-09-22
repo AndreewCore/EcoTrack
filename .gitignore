@@ -1,12 +1,13 @@
-/nbproject/private/
-/build/
-/dist/
+# Backend (NetBeans/Ant)
+/backend/nbproject/private/
+/backend/build/
+/backend/dist/
+
+# Documentación personal (plan de migración, análisis, plan de estudio) — no versionar
+/docs/
 
 # Instrucciones locales de Claude Code — no versionar
 CLAUDE.md
 
 # Artefactos transitorios de herramientas
 .projstatus
-
-# Plan de estudio personal — no versionar
-PLAN_APRENDIZAJE.txt
