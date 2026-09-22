@@ -70,14 +70,14 @@ tag alias tipo "javafx-final" sobre el mismo commit.
   │   ├── src/
   │   ├── package.json
   │   └── pnpm-lock.yaml   # lockfile de pnpm (se commitea; no usar npm)
-  ├── docs/          # ANALISIS.txt, PLAN_APRENDIZAJE.txt, este archivo
+  ├── docs/          # ANALISIS.txt, este archivo
   └── README.md
 
   Gestor de paquetes del frontend: pnpm (no npm). Elegido por
   instalaciones rápidas/ordenadas (node_modules estricto + almacén
   con enlaces duros) e instalación determinista vía pnpm-lock.yaml.
   Regla: no mezclar npm y pnpm en el mismo proyecto (evita lockfiles
-  duplicados). Los comandos de PLAN_APRENDIZAJE.txt asumen pnpm.
+  duplicados). Todos los comandos del frontend usan pnpm.
 
 4. PIPELINE DE MIGRACIÓN POR FEATURES (PENDIENTE)
 ----------------------------------------------------------------
@@ -99,12 +99,9 @@ luego promoción dev->staging->main con tag de release.
   feature/remove-javafx         Eliminar UI JavaFX al lograr    v1.0.0
                                 paridad en React
 
-Encaje con el aprendizaje: cada fase de PLAN_APRENDIZAJE.txt
-produce (aproximadamente) una de estas ramas.
-
 5. PENDIENTES INMEDIATOS
 ----------------------------------------------------------------
-  - Comenzar el plan de estudio (PLAN_APRENDIZAJE.txt), Fase 0.
+  - Comenzar el plan de estudio, Fase 0.
   - NO se ha generado código todavía (decisión explícita).
   - La rama feature/monorepo-layout existe pero está vacía;
     el traspaso real de carpetas se hará cuando se decida arrancar.
