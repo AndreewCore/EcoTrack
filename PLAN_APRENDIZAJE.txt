@@ -1,0 +1,280 @@
+================================================================
+PLAN DE APRENDIZAJE ORDENADO
+De Java + JavaFX  ->  Java (Spring Boot) + React + Leaflet
+Proyecto: EcoTrack
+Fecha: 2026-07-05
+================================================================
+
+Cómo usar este plan
+-------------------
+- Está ordenado: no saltes fases, cada una asume la anterior.
+- Cada fase tiene: QUÉ aprender, POR QUÉ importa para EcoTrack,
+  una PRÁCTICA atada al proyecto y un CHECKPOINT ("terminado
+  cuando..."). No avances hasta cumplir el checkpoint.
+- Los tiempos son estimaciones para estudio a ritmo de estudiante
+  (no dedicación full-time). Ajusta a tu realidad.
+- Ventaja tuya: ya sabes programar y piensas con tipos (Java). No
+  aprendes a programar; aprendes un ecosistema nuevo.
+
+Ruta completa (vista de pájaro)
+-------------------------------
+  Fase 0  Preparación del entorno            (medio día)
+  Fase 1  JavaScript para quien ya sabe Java (1 semana)
+  Fase 2  TypeScript                         (3-4 días)
+  Fase 3  HTML + CSS lo justo                (3-4 días)
+  Fase 4  React: fundamentos                 (2 semanas)
+  Fase 5  Herramientas React (Vite, npm)     (2 días)
+  Fase 6  Consumir una API (fetch + estado)  (1 semana)
+  Fase 7  Leaflet + react-leaflet (mapas)    (1 semana)
+  Fase 8  Backend Java como API REST         (1-2 semanas)
+  Fase 9  Integración full-stack             (1-2 semanas)
+  Fase 10 Build y despliegue básico          (unos días)
+
+================================================================
+FASE 0 — PREPARACIÓN DEL ENTORNO
+================================================================
+QUÉ:
+  - Instalar Node.js (versión LTS). Trae npm incluido.
+  - Instalar pnpm (el gestor de paquetes que usaremos en el
+    frontend, en lugar de npm): `npm install -g pnpm` o, mejor,
+    `corepack enable`. Elegimos pnpm por instalaciones más rápidas
+    y ordenadas: node_modules estricto (evita usar dependencias que
+    no declaraste) y almacén global con enlaces duros. Comparte el
+    mismo registro que npm, así que no cambia la seguridad frente a
+    paquetes maliciosos, pero sí la higiene del proyecto.
+  - Editor: VS Code (extensiones: ESLint, Prettier, y luego una
+    de React/TS).
+  - Aprender a abrir las DevTools del navegador (F12): consola,
+    pestaña Network, inspector de elementos.
+POR QUÉ:
+  Node = tu "JVM" para las herramientas; pnpm = tu "Maven".
+  Sin esto no corre nada del mundo React.
+PRÁCTICA:
+  - `node --version`, `npm --version` y `pnpm --version` deben
+    responder.
+  - Crear un archivo hola.js con console.log("hola") y correrlo
+    con `node hola.js`.
+CHECKPOINT:
+  Puedes ejecutar un archivo .js desde la terminal y ves la salida.
+
+================================================================
+FASE 1 — JAVASCRIPT PARA QUIEN YA SABE JAVA
+================================================================
+QUÉ (enfócate en las DIFERENCIAS con Java):
+  - Variables: let y const (olvida "var"). Tipado dinámico.
+  - Funciones flecha: (x) => x * 2   (equivalen a lambdas Java).
+  - Métodos de array: map, filter, reduce, forEach, find, sort.
+    OJO: son el equivalente directo a los Streams de Java. Tus
+    filtrarPorTipo/ordenarPorPeso de ListaResiduos serían aquí
+    array.filter(...) y array.sort(...).
+  - Objetos y desestructuración: const { nombre, peso } = residuo;
+  - Módulos: import / export (como package + import de Java).
+  - Asincronía: Promesas y async/await (clave para llamar al
+    backend en la Fase 6).
+  - JSON: JSON.parse / JSON.stringify. Es el formato de datos
+    entre frontend y backend.
+  - == vs === : usa SIEMPRE === (comparación estricta).
+POR QUÉ:
+  Es el lenguaje base de todo. React y Leaflet son librerías de JS.
+PRÁCTICA (sin React todavía, solo Node):
+  - Crea un array de objetos "residuo" a mano y practica:
+    filtrar por tipo, ordenar por peso, sumar el peso total con
+    reduce. Reproduce en JS lo que ya hiciste en ListaResiduos.
+CHECKPOINT:
+  Puedes tomar una lista de objetos y filtrar/ordenar/agregar con
+  map/filter/reduce sin mirar la documentación a cada paso.
+
+================================================================
+FASE 2 — TYPESCRIPT
+================================================================
+QUÉ:
+  - Tipos básicos: string, number, boolean, arrays (number[]).
+  - interface y type: describir la forma de un objeto.
+  - Genéricos (ya los conoces de Java): Array<Residuo>.
+  - Enums (como TipoResiduo, EstadoVehiculo de tu proyecto).
+  - Tipos opcionales (nombre?: string) y union (a | b).
+POR QUÉ:
+  TypeScript = JavaScript con tipos. Viniendo de Java te dará
+  seguridad y autocompletado. Es el estándar profesional hoy.
+PRÁCTICA:
+  - Define en TS las interfaces de tu dominio: Residuo, Zona,
+    TipoResiduo (enum), Vehiculo. Serán el "contrato" con el
+    backend Java.
+CHECKPOINT:
+  Tienes un archivo tipos.ts con las interfaces de EcoTrack y el
+  editor te marca error si asignas un tipo equivocado.
+
+================================================================
+FASE 3 — HTML + CSS LO JUSTO
+================================================================
+QUÉ:
+  - HTML: etiquetas básicas (div, span, h1-h6, ul/li, button,
+    input, form, img). Concepto de atributos.
+  - CSS: selectores, propiedades comunes (color, padding, margin),
+    y sobre todo FLEXBOX para acomodar elementos (equivale a los
+    HBox/VBox de JavaFX).
+POR QUÉ:
+  React genera HTML; el estilo es CSS. No necesitas ser diseñador,
+  solo entender la estructura y saber acomodar cosas.
+PRÁCTICA:
+  - Maqueta en HTML+CSS estático (sin React) una "tarjeta de
+    residuo": nombre, tipo, peso, zona.
+CHECKPOINT:
+  Puedes leer un HTML y saber qué dibuja; puedes centrar y alinear
+  elementos con flexbox.
+
+================================================================
+FASE 4 — REACT: FUNDAMENTOS  (el corazón del plan)
+================================================================
+QUÉ (en este orden):
+  1. Componentes y JSX: una función que devuelve "HTML".
+  2. Props: pasar datos a un componente (como parámetros).
+  3. Estado con useState: datos que cambian y redibujan la UI.
+     >>> Esto reemplaza tu actualizarVista() manual de JavaFX. <<<
+  4. Renderizar listas con .map() y el atributo "key".
+  5. Renderizado condicional (mostrar/ocultar según datos).
+  6. Manejo de eventos (onClick, onChange en inputs).
+  7. Formularios controlados (input ligado al estado).
+  8. useEffect: ejecutar código cuando algo cambia o al montar
+     el componente (lo usarás para pedir datos al backend).
+  9. Composición: componentes dentro de componentes.
+POR QUÉ:
+  React ES tu nuevo JavaFX+FXML+controladores, todo junto.
+PRÁCTICA (aún con datos falsos en memoria, sin backend):
+  - Componente <ListaResiduos> que recibe un array y pinta una
+    <TarjetaResiduo> por cada uno con .map().
+  - Un <FormularioResiduo> con inputs controlados que agrega un
+    residuo al estado; la lista se actualiza sola.
+  - Un <ChoiceBox> de filtro por tipo que filtra la lista mostrada.
+    (Reproduce la pantalla de Residuos de tu app, pero en React.)
+CHECKPOINT:
+  Tienes en pantalla una lista de residuos que puedes filtrar y a
+  la que puedes agregar elementos con un formulario, y todo se
+  actualiza solo. NO tocaste ningún "actualizarVista".
+
+================================================================
+FASE 5 — HERRAMIENTAS: VITE Y PNPM
+================================================================
+QUÉ:
+  - Crear el proyecto real con Vite:
+      pnpm create vite ecotrack-frontend --template react-ts
+  - Entender package.json (dependencias y scripts) y el lockfile
+    pnpm-lock.yaml (versiones exactas; se commitea al repo).
+  - `pnpm install`, `pnpm dev` (servidor de desarrollo con
+    recarga en caliente), `pnpm build`.
+  - Estructura de carpetas de un proyecto React (src/, components/).
+POR QUÉ:
+  Es el andamiaje profesional. Vite = tu "javac + servidor de
+  desarrollo". Aquí dejas de usar archivos sueltos.
+PRÁCTICA:
+  - Migra lo de la Fase 4 a un proyecto Vite real, organizado en
+    carpetas src/components/.
+CHECKPOINT:
+  `pnpm dev` levanta tu app en el navegador y al guardar un
+  archivo se refresca sola.
+
+================================================================
+FASE 6 — CONSUMIR UNA API (FETCH + ESTADO ASÍNCRONO)
+================================================================
+QUÉ:
+  - fetch() (o la librería axios) para pedir datos por HTTP.
+  - async/await aplicado a fetch.
+  - Patrón: pedir datos en useEffect al montar y guardarlos en
+    useState. Manejar 3 estados: cargando, error, datos.
+POR QUÉ:
+  Es el puente al backend Java. El frontend NO tendrá los datos;
+  se los pedirá a tu API por HTTP y recibirá JSON.
+PRÁCTICA (con una API falsa mientras no tengas el backend):
+  - Usa una API pública de prueba (p.ej. JSONPlaceholder) para
+    practicar el patrón cargar/mostrar/errores.
+CHECKPOINT:
+  Tu app pide datos a una URL, muestra "cargando...", pinta el
+  resultado y maneja el caso de error.
+
+================================================================
+FASE 7 — LEAFLET + REACT-LEAFLET (LOS MAPAS)
+================================================================
+QUÉ:
+  - Conceptos Leaflet: mapa base, tiles (OpenStreetMap), capas,
+    marcadores, popups.
+  - GeoJSON: describir zonas de Guayaquil como polígonos.
+  - react-leaflet: MapContainer, TileLayer, Marker, Popup, GeoJSON.
+  - Estilar polígonos por dato (colorear zona según peso de
+    residuos) y manejar clicks en una zona.
+POR QUÉ:
+  Reemplaza tu solución actual de intercambiar PNGs. Aquí ganas el
+  mapa interactivo real con zonas coloreables.
+PRÁCTICA:
+  - Mostrar Guayaquil centrado con OpenStreetMap.
+  - Dibujar 2-3 zonas (Urdesa, Guasmo...) como polígonos GeoJSON.
+  - Colorearlas según un valor y mostrar un popup al hacer click.
+CHECKPOINT:
+  Ves el mapa de Guayaquil con al menos una zona dibujada,
+  coloreada por un dato y con popup al click.
+
+================================================================
+FASE 8 — BACKEND JAVA COMO API REST (tu terreno conocido)
+================================================================
+QUÉ:
+  - Spring Boot: crear un proyecto (start.spring.io).
+  - Controladores REST (@RestController, @GetMapping, @PostMapping)
+    que devuelven JSON automáticamente.
+  - Exponer tu dominio: endpoints para residuos, zonas, etc.
+  - Devolver las zonas como GeoJSON para el mapa.
+  - CORS: permitir que el frontend (otro puerto) llame al backend.
+POR QUÉ:
+  Reutilizas tu lógica Java (dominio, estadísticas, incluso TDA si
+  quieres) pero ahora servida por HTTP en vez de dibujada con
+  JavaFX. Es la mitad que ya dominas.
+PRÁCTICA:
+  - GET /api/residuos  -> lista de residuos en JSON.
+  - POST /api/residuos -> crear un residuo.
+  - GET /api/zonas     -> zonas en formato GeoJSON.
+CHECKPOINT:
+  Abres esos endpoints en el navegador/Postman y ves el JSON.
+
+================================================================
+FASE 9 — INTEGRACIÓN FULL-STACK
+================================================================
+QUÉ:
+  - Conectar el React de las fases 4-7 al Spring Boot de la 8.
+  - CRUD completo de residuos contra la API real.
+  - El mapa consume /api/zonas real y colorea por datos reales.
+  - Manejo de errores y estados de carga de punta a punta.
+POR QUÉ:
+  Es EcoTrack reconstruido: Java calcula y guarda; React dibuja.
+PRÁCTICA:
+  - Reemplaza los datos falsos de la Fase 4-6 por llamadas reales
+    a tu backend. La pantalla de residuos y el mapa funcionan con
+    datos del servidor.
+CHECKPOINT:
+  Creas un residuo desde el formulario React, se guarda vía API en
+  el backend Java y aparece en la lista y (si aplica) en el mapa.
+
+================================================================
+FASE 10 — BUILD Y DESPLIEGUE BÁSICO
+================================================================
+QUÉ:
+  - `npm run build` genera el frontend estático de producción.
+  - Empaquetar backend (jar de Spring Boot).
+  - Nociones de dónde corre cada cosa (frontend estático + API).
+  - Variables de entorno para la URL de la API.
+POR QUÉ:
+  Cerrar el ciclo: pasar de "corre en mi máquina" a algo entregable.
+CHECKPOINT:
+  Tienes un build de producción del frontend y un jar del backend
+  que arrancan sin el modo desarrollo.
+
+================================================================
+CONSEJOS FINALES
+================================================================
+- No estudies "en seco": cada fase termina construyendo un pedazo
+  real de EcoTrack. Aprender-haciendo pega mucho más.
+- No intentes aprender React y Spring Boot el mismo día. Primero
+  el frontend con datos falsos (fases 1-7), luego el backend (8),
+  luego los unes (9).
+- Cuando te atasques, aísla el problema en un archivo mínimo antes
+  de pedir ayuda.
+- Guarda tu avance en Git desde el día 1 (ver estrategia de ramas
+  del proyecto).
+================================================================
