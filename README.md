@@ -25,7 +25,7 @@ resto del dominio depende directamente de ellas. Esta rama `main` conserva la
 
 ## Cómo funciona (arquitectura)
 
-El código fuente en `backend/src/` se organiza en cuatro capas:
+El código fuente en `backend/src/main/java/` se organiza en cuatro capas:
 
 | Capa | Paquete | Rol |
 |------|---------|-----|
@@ -34,7 +34,8 @@ El código fuente en `backend/src/` se organiza en cuatro capas:
 | Interfaz | `controladores/` | Controladores JavaFX, uno por pantalla (`Ecotrack`, `Residuos`, `Zonas`, `CentroReciclaje`, `Estadisticas`). |
 | Utilidades | `Utilitaria/` | Apoyo transversal: `DataManager` (persistencia), comparadores, `ResiduoIterator`. |
 
-- Las **vistas** (`backend/src/vistas/*.fxml`) y las **imágenes** (`backend/src/images/`) se
+- Las **vistas** (`vistas/*.fxml`) y las **imágenes** (`images/`) viven en
+  `backend/src/main/resources/` y se
   cargan por ruta de recurso (p. ej. `/vistas/ecotrack.fxml`, `/images/icon.png`).
 - El **almacén central de datos** es un singleton mutable global:
   `ListaResiduos.getListaResiduosGlobal()` devuelve una
@@ -44,27 +45,23 @@ El código fuente en `backend/src/` se organiza en cuatro capas:
 
 ## Requisitos
 
-Ambos están fijados de forma estricta en la configuración del proyecto:
-
-- **JDK 25** — `backend/nbproject/project.properties` fija
-  `javac.source=25`, `javac.target=25`, `platform.active=JDK_25`.
-- **JavaFX SDK externo** (no viene empaquetado). Los argumentos de ejecución
-  apuntan a `--module-path <ruta>/javafx-sdk-25.0.2/lib --add-modules
-  javafx.controls,javafx.fxml`. Ese SDK debe existir en esa ruta o el lanzamiento
-  falla.
+- **JDK 25 o superior.** El código se compila con `--release 25` (Java 25 LTS).
+- Nada más: **Maven** llega con el wrapper (`./mvnw`) y **JavaFX 25** se
+  descarga como dependencia, sin instalar ningún SDK aparte.
 
 ## Compilar y ejecutar
 
-El proyecto se construye con **NetBeans Ant** desde `backend/` (`build.xml`
-delega en `nbproject/build-impl.xml`). El punto de entrada es `ecotrack.Main`.
+El backend es un proyecto **Maven** en `backend/`. El punto de entrada es
+`ecotrack.Main`.
 
 ```bash
 cd backend
-ant compile      # compila a build/
-ant run          # compila + lanza la app JavaFX
-ant jar          # empaqueta dist/EcoTrack.jar
-ant clean        # elimina build/ y dist/
+./mvnw javafx:run    # compila + lanza la app JavaFX
+./mvnw package       # empaqueta target/ecotrack-backend-<versión>.jar
+./mvnw clean         # elimina target/
 ```
+
+En Windows se usa `mvnw.cmd` en lugar de `./mvnw`.
 
 > No hay pruebas automatizadas en el repositorio (no hay JUnit ni fuentes `test/`).
 
@@ -74,7 +71,7 @@ ant clean        # elimina build/ y dist/
 
 | Carpeta | Contenido |
 |---------|-----------|
-| `backend/` | Aplicación Java (hoy JavaFX con Ant; pasará a Spring Boot + Maven). |
+| `backend/` | Aplicación Java con Maven (hoy JavaFX; pasará a Spring Boot). |
 | `frontend/` | Futuro cliente React + TypeScript + Leaflet (vacío por ahora). |
 
 ---
