@@ -82,7 +82,7 @@ ant clean        # elimina build/ y dist/
 > - **Frontend** — React + TypeScript con **Leaflet** para el mapa interactivo
 >   de Guayaquil (reemplaza el intercambio de imágenes PNG por zonas coloreables).
 >
-> El plan de ramas, el roadmap de aprendizaje y el análisis del código están
-> documentados en `MIGRACION_GIT.txt`, `PLAN_APRENDIZAJE.txt` y `ANALISIS.txt`.
+> El plan de ramas y el análisis del código están documentados en
+> `MIGRACION_GIT.txt` y `ANALISIS.txt`.
 > El desarrollo sigue un modelo de ramas estricto, forward-only y solo por Pull
 > Request: `feature/* → dev → staging → main`.
