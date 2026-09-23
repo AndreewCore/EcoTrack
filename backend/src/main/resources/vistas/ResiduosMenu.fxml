@@ -13,7 +13,7 @@
    <children>
       <ImageView fx:id="residuosSceneView" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/Escenas/ResiduoScene.png" />
+            <Image url="@../images/Escenas/ResiduoScene.png" />
          </image>
       </ImageView>
       <Button fx:id="returnButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSceneMain" opacity="0.0" prefHeight="52.0" prefWidth="69.0" text="Button" />
