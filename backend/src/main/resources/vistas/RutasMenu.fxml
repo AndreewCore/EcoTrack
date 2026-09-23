@@ -11,13 +11,13 @@
    <children>
       <ImageView fx:id="zonasSceneView" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/Escenas/ZonaScene.png" />
+            <Image url="@../images/Escenas/ZonaScene.png" />
          </image>
       </ImageView>
       <Button fx:id="returnButton" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSceneMain" opacity="0.0" prefHeight="50.0" prefWidth="53.0" text="Button" />
       <ImageView fx:id="mapaView" fitHeight="672.0" fitWidth="574.0" layoutX="617.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/MapasGYE/Mapa%20Guayaquil%20Trazado%20Blanco.png" />
+            <Image url="@../images/MapasGYE/Mapa%20Guayaquil%20Trazado%20Blanco.png" />
          </image>
       </ImageView>
       <Button fx:id="fortinMonteSinaiButton" layoutX="664.0" layoutY="52.0" mnemonicParsing="false" onAction="#highlightFortinMonteSinai" opacity="0.0" prefHeight="243.0" prefWidth="228.0" />
