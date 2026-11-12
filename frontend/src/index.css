@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/league-spartan';
+@import '@fontsource-variable/montserrat';
+
+/* Paleta muestreada de las escenas PNG de la app JavaFX (images/Escenas). */
+@theme {
+  --color-fondo: #edeced;
+  --color-tinta: #3a3a3a;
+  --color-gris-boton: #757575;
+
+  --color-banner-1: #c1ff72;
+  --color-banner-2: #7ed957;
+  --color-banner-3: #00bf63;
+  --color-banner-4: #0db061;
+
+  --color-residuos: #0db061;
+  --color-residuos-tarjeta: #00bf63;
+  --color-rutas: #7ed957;
+  --color-rutas-tarjeta: #a0eb40;
+  --color-centro: #e2c13d;
+  --color-centro-tarjeta: #ffde59;
+  --color-estadisticas: #ff751f;
+
+  --color-zona-verde: #22b14c;
+  --color-zona-amarillo: #f5c518;
+  --color-zona-rojo: #e53935;
+
+  --font-titulo: 'League Spartan Variable', 'Montserrat Variable', system-ui, sans-serif;
+  --font-sans: 'Montserrat Variable', system-ui, sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+  }
+}
+
+/* Etiquetas en mayúsculas con tracking amplio, como las píldoras de las escenas. */
+@utility etiqueta {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}

@@ -67,12 +67,24 @@ En Windows se usa `mvnw.cmd` en lugar de `./mvnw`.
 
 ---
 
+## Frontend
+
+Cliente web en `frontend/` (React + TypeScript + Vite, gestionado con **pnpm**):
+
+```bash
+cd frontend
+pnpm install
+pnpm dev        # http://localhost:5173
+```
+
+---
+
 ## Estructura del repositorio
 
 | Carpeta | Contenido |
 |---------|-----------|
 | `backend/` | Aplicación Java con Maven (hoy JavaFX; pasará a Spring Boot). |
-| `frontend/` | Futuro cliente React + TypeScript + Leaflet (vacío por ahora). |
+| `frontend/` | Cliente React + TypeScript + Vite (pnpm). |
 
 ---
 
