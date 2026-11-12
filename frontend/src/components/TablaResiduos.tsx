@@ -43,7 +43,8 @@ export function TablaResiduos({
   const c = CLASES_SECCION[color]
   const conAcciones = Boolean(onEditar || onEliminar)
   return (
-    <div className="overflow-x-auto">
+    // relative: los textos sr-only (absolute) quedan dentro de la zona con scroll y no ensanchan la página.
+    <div className="relative overflow-x-auto">
       <table className="w-full border-separate border-spacing-x-2 border-spacing-y-1.5 text-left">
         <thead>
           <tr>

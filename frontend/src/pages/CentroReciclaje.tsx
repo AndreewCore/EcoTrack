@@ -59,7 +59,7 @@ export default function CentroReciclaje() {
   const claseCaja = 'border-centro rounded-2xl border-4 bg-white p-3'
 
   return (
-    <main className="mx-auto grid min-h-dvh max-w-[1280px] gap-4 pb-4 sm:px-4 lg:grid-cols-[minmax(0,52rem)_1fr]">
+    <main className="mx-auto grid min-h-dvh max-w-[1280px] grid-cols-[minmax(0,1fr)] gap-4 pb-4 sm:px-4 lg:grid-cols-[minmax(0,52rem)_minmax(0,1fr)]">
       <div className="flex min-w-0 flex-col gap-3">
         <CabeceraSeccion titulo="Centro de reciclaje" color="centro" className="w-full uppercase sm:w-fit sm:pr-8 lg:-ml-4" />
         <h2 className="font-titulo text-centro px-4 text-[clamp(1.8rem,4vw,2.8rem)] leading-none font-medium sm:px-0">

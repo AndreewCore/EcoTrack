@@ -14,11 +14,11 @@ export default function Rutas() {
   const estado = zonas.datos?.find((z) => z.zona === seleccionada)
 
   return (
-    <main className="mx-auto grid min-h-dvh max-w-[1280px] gap-4 pb-4 sm:px-4 lg:grid-cols-[minmax(20rem,32rem)_1fr]">
-      <div className="flex flex-col gap-5">
+    <main className="mx-auto grid min-h-dvh max-w-[1280px] grid-cols-[minmax(0,1fr)] gap-4 pb-4 sm:px-4 lg:grid-cols-[minmax(20rem,32rem)_minmax(0,1fr)]">
+      <div className="flex min-w-0 flex-col gap-5">
         <CabeceraSeccion titulo="Rutas" color="rutas" className="w-full uppercase sm:max-w-sm lg:-ml-4" />
 
-        <div className="grid gap-5 px-4 sm:px-0">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-5 px-4 sm:px-0">
           <label className="grid gap-2">
             <span className="etiqueta text-rutas text-xl sm:text-2xl">Zona seleccionada:</span>
             <select
