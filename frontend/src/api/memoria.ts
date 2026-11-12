@@ -1,6 +1,6 @@
 import { residuosSemilla } from '../data/semilla'
 import { PRIORIDAD_POR_TIPO } from '../lib/dominio'
-import { TIPOS_RESIDUO, type ConsultaResiduos, type Pagina, type Residuo } from '../types'
+import { TIPOS_RESIDUO, ZONAS, type EstadoZona, type ConsultaResiduos, type Pagina, type Residuo } from '../types'
 import { ErrorApi, type EcoTrackApi } from './contrato'
 
 /** Ordena una copia de los residuos según el criterio de la consulta. */
@@ -27,6 +27,23 @@ export function paginar<T>(lista: T[], pagina = 1, tamano = 10): Pagina<T> {
     totalPaginas,
     totalElementos: lista.length,
   }
+}
+
+/**
+ * Calcula pendiente, recolectado y utilidad de cada zona a partir de los residuos:
+ * lo pendiente aún no se recoge; lo que está en el centro o procesado ya se recolectó.
+ */
+export function calcularZonas(residuos: Residuo[]): EstadoZona[] {
+  return ZONAS.map((zona) => {
+    let pesoPendiente = 0
+    let pesoRecolectado = 0
+    for (const r of residuos) {
+      if (r.zona !== zona) continue
+      if (r.estado === 'PENDIENTE') pesoPendiente += r.peso
+      else pesoRecolectado += r.peso
+    }
+    return { zona, pesoPendiente, pesoRecolectado, utilidad: pesoRecolectado - pesoPendiente }
+  })
 }
 
 /** Implementación en memoria con los datos semilla; se pierde al recargar. */
@@ -71,6 +88,9 @@ export function crearApiMemoria(): EcoTrackApi {
     async eliminarResiduo(id) {
       buscar(id)
       residuos = residuos.filter((r) => r.id !== id)
+    },
+    async estadoZonas() {
+      return calcularZonas(residuos)
     },
   }
 }
