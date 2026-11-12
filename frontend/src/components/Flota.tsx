@@ -86,14 +86,14 @@ export function Flota({ onCambio }: { onCambio: () => void }) {
           {vehiculos.error}
         </p>
       ) : (
-        <ol className="mt-3 grid gap-1.5">
+        <ol className="mt-3 grid grid-cols-[minmax(0,1fr)] gap-1.5">
           {(vehiculos.datos ?? []).map((v) => (
             <li
               key={v.id}
-              className={`flex items-center gap-3 rounded-xl px-3 py-1.5 text-sm ${v.turno === 1 ? 'bg-rutas/20 font-semibold' : 'bg-neutral-50'}`}
+              className={`flex items-center gap-2 rounded-xl px-2 py-1.5 text-sm sm:gap-3 sm:px-3 ${v.turno === 1 ? 'bg-rutas/20 font-semibold' : 'bg-neutral-50'}`}
             >
               <span className="bg-rutas grid size-6 shrink-0 place-items-center rounded-full text-xs font-bold text-white">{v.turno}</span>
-              <span className="w-20 shrink-0 font-mono">{v.id}</span>
+              <span className="w-16 shrink-0 font-mono text-xs sm:w-20 sm:text-sm">{v.id}</span>
               <span className="min-w-0 flex-1 truncate">{NOMBRE_ZONA[v.zonaAsignada]}</span>
               <span className="tabular-nums">{formatearKg(v.capacidad)}</span>
               <button

@@ -52,7 +52,7 @@ function Contenido({ datos }: { datos: Datos }) {
     }))
 
   return (
-    <div className="grid gap-5 px-4 sm:px-0">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5 px-4 sm:px-0">
       <section aria-label="Resumen" className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         <Tarjeta titulo="Residuos" valor={String(datos.totalResiduos)} />
         <Tarjeta titulo="Peso total" valor={formatearKg(datos.pesoTotal)} />
@@ -65,7 +65,7 @@ function Contenido({ datos }: { datos: Datos }) {
         />
       </section>
 
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-2">
         <Panel color="estadisticas" className="p-4">
           <h2 className="etiqueta text-estadisticas text-sm">Peso por tipo de residuo</h2>
           <div className="mt-3 h-72">

@@ -55,7 +55,7 @@ export default function Residuos() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-[1280px] flex-col gap-4 pb-4 sm:px-4">
-      <div className="grid gap-4 lg:grid-cols-[minmax(18rem,24rem)_1fr]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(18rem,24rem)_minmax(0,1fr)]">
         <div className="flex flex-col gap-4">
           <CabeceraSeccion titulo="Residuos" color="residuos" className="lg:-ml-4" />
           <div className="grid gap-4 px-4 sm:grid-cols-2 sm:px-0 lg:grid-cols-1">
@@ -98,7 +98,7 @@ export default function Residuos() {
         </Panel>
       </div>
 
-      <div className="grid gap-3 px-4 sm:px-0">
+      <div className="grid min-w-0 gap-3 px-4 sm:px-0">
         <Aviso mensaje={aviso} />
         <FormularioResiduo
           editando={editando}
