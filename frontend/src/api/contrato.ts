@@ -1,4 +1,4 @@
-import type { ConsultaResiduos, Pagina, Residuo, ResiduoEntrada } from '../types'
+import type { ConsultaResiduos, EstadoZona, Pagina, Residuo, ResiduoEntrada } from '../types'
 
 /**
  * Operaciones de datos que usan las pantallas. Hay una implementación por modo:
@@ -9,6 +9,8 @@ export interface EcoTrackApi {
   crearResiduo(entrada: ResiduoEntrada): Promise<Residuo>
   actualizarResiduo(id: number, entrada: ResiduoEntrada): Promise<Residuo>
   eliminarResiduo(id: number): Promise<void>
+  /** Pesos y utilidad ambiental de las 18 zonas. */
+  estadoZonas(): Promise<EstadoZona[]>
 }
 
 /** Error de la capa de datos con un mensaje apto para mostrar al usuario. */

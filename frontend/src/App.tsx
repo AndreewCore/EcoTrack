@@ -3,6 +3,7 @@ import { CabeceraSeccion } from './components/Seccion'
 import type { ColorSeccion } from './lib/colores'
 import Inicio from './pages/Inicio'
 import Residuos from './pages/Residuos'
+import Rutas from './pages/Rutas'
 
 /** Pantalla provisional para las secciones que aún no se han migrado. */
 function EnConstruccion({ titulo, color }: { titulo: string; color: ColorSeccion }) {
@@ -24,7 +25,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/residuos" element={<Residuos />} />
-        <Route path="/rutas" element={<EnConstruccion titulo="Rutas" color="rutas" />} />
+        <Route path="/rutas" element={<Rutas />} />
         <Route path="/centro" element={<EnConstruccion titulo="Centro de reciclaje" color="centro" />} />
         <Route path="/estadisticas" element={<EnConstruccion titulo="Estadísticas" color="estadisticas" />} />
         <Route path="*" element={<Inicio />} />
