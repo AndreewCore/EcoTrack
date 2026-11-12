@@ -9,22 +9,11 @@ import dev.andreewcodes.ecotrack.TDA.CircularDoublyLinkedList;
  */
 public class ListaZonas extends CircularDoublyLinkedList<Zona> {
 
-    // Instancia compartida solo por la app de escritorio; la API crea la suya en EcoTrackData.
-    private static ListaZonas instanciaEscritorio;
-
     /** Crea una zona por cada valor de {@link ZonaGuayaquil}, con pesos en cero. */
     public ListaZonas() {
         for (ZonaGuayaquil zonaEnum : ZonaGuayaquil.values()) {
             addLast(new Zona(zonaEnum));
         }
-    }
-
-    /** Instancia global que usan los controladores JavaFX. */
-    public static ListaZonas getInstance() {
-        if (instanciaEscritorio == null) {
-            instanciaEscritorio = new ListaZonas();
-        }
-        return instanciaEscritorio;
     }
 
     /** Busca la zona que corresponde al valor del enum. */

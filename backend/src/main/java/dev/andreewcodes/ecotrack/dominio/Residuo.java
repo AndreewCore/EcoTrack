@@ -10,9 +10,6 @@ import java.time.LocalDate;
  */
 public class Residuo {
 
-    // Contador solo para la app de escritorio, que crea residuos sin pasar por EcoTrackData.
-    private static int siguienteIdEscritorio = 1;
-
     private int id;
     private String nombre;
     private TipoResiduo tipo;
@@ -31,18 +28,6 @@ public class Residuo {
         this.zona = zona;
         this.prioridad = prioridad;
         this.estado = EstadoResiduo.PENDIENTE;
-    }
-
-    /**
-     * Constructor de la app de escritorio: asigna id propio, prioridad por defecto y
-     * suma el peso a la zona global, como hacía la versión JavaFX.
-     */
-    public Residuo(String nombre, TipoResiduo tipo, double peso, ZonaGuayaquil zona) {
-        this(siguienteIdEscritorio++, nombre, tipo, peso, zona, tipo.getPrioridadPorDefecto());
-        Zona z = ListaZonas.getInstance().buscarPorZonaGuayaquil(zona);
-        if (z != null) {
-            z.setPesoPendiente(z.getPesoPendiente() + peso);
-        }
     }
 
     public int getId() {
