@@ -97,13 +97,21 @@ cd backend
 
 ## Frontend
 
-Cliente web en `frontend/` (React + TypeScript + Vite, gestionado con **pnpm**):
+Cliente web en `frontend/` (React + TypeScript + Vite, Tailwind, react-leaflet y
+Recharts), gestionado con **pnpm**. Tiene dos modos, elegidos con `VITE_MODO`:
+
+- **`api`** (por defecto en desarrollo): usa la API Spring Boot de `VITE_API_URL`.
+- **`demo`**: toda la lógica corre en el navegador y los datos se guardan en
+  `localStorage`. Es lo que se publica en GitHub Pages.
+
+Levantar todo en local (dos terminales):
 
 ```bash
-cd frontend
-pnpm install
-pnpm dev        # http://localhost:5173
+cd backend && ./mvnw spring-boot:run     # terminal 1: API en :8080
+cd frontend && pnpm install && pnpm dev  # terminal 2: web en :5173
 ```
+
+Solo el frontend, sin backend: `VITE_MODO=demo pnpm dev`.
 
 ---
 
