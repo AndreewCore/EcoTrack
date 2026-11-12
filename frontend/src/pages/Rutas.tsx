@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../api'
+import { Flota } from '../components/Flota'
 import { LeyendaMapa, MapaGuayaquil } from '../components/MapaGuayaquil'
 import { CabeceraSeccion, Panel, Pildora } from '../components/Seccion'
 import { NOMBRE_ZONA, formatearKg } from '../lib/dominio'
@@ -62,10 +63,11 @@ export default function Rutas() {
               <LeyendaMapa />
             </div>
           </Panel>
+          <Flota onCambio={zonas.recargar} />
         </div>
       </div>
 
-      <div className="border-rutas mx-4 min-h-[60vh] border-[6px] bg-white sm:mx-0 lg:mt-6">
+      <div className="border-rutas mx-4 h-[70vh] min-h-[24rem] border-[6px] bg-white sm:mx-0 lg:sticky lg:top-4 lg:mt-6 lg:h-[calc(100dvh-3rem)]">
         <MapaGuayaquil zonas={zonas.datos ?? []} seleccionada={seleccionada} onSeleccionar={setSeleccionada} />
       </div>
     </main>

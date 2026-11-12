@@ -28,7 +28,8 @@ interface TablaResiduosProps {
 
 /**
  * Tabla de residuos con encabezados en píldora, como las listas de las escenas
- * originales. Las acciones solo aparecen si se pasan sus callbacks.
+ * originales. Las acciones solo aparecen si se pasan sus callbacks y la regla de
+ * negocio las permite: editar solo pendientes y no eliminar lo que está en el centro.
  */
 export function TablaResiduos({
   residuos,
@@ -79,7 +80,7 @@ export function TablaResiduos({
               ))}
               {conAcciones && (
                 <td className="px-1 py-1 whitespace-nowrap">
-                  {onEditar && (
+                  {onEditar && r.estado === 'PENDIENTE' && (
                     <button
                       type="button"
                       onClick={() => onEditar(r)}
@@ -89,7 +90,7 @@ export function TablaResiduos({
                       <IconoEditar className="size-5" />
                     </button>
                   )}
-                  {onEliminar && (
+                  {onEliminar && r.estado !== 'EN_CENTRO' && (
                     <button
                       type="button"
                       onClick={() => onEliminar(r)}

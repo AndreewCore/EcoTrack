@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
-import { IconoDescargar, IconoDiana, IconoPastel, IconoSubir, IconoTacho, IconoUbicacion } from '../components/Iconos'
+import { IconoDiana, IconoPastel, IconoTacho, IconoUbicacion } from '../components/Iconos'
+import { ImportarExportar } from '../components/ImportarExportar'
 
 const TARJETAS = [
   { a: '/residuos', titulo: 'Residuos', fondo: 'bg-residuos-tarjeta', Icono: IconoTacho },
@@ -8,15 +9,8 @@ const TARJETAS = [
   { a: '/estadisticas', titulo: 'Estadísticas', fondo: 'bg-estadisticas', Icono: IconoPastel },
 ] as const
 
-interface InicioProps {
-  /** Descarga el estado actual como CSV. */
-  onDescargar?: () => void
-  /** Abre el flujo para importar un CSV. */
-  onSubir?: () => void
-}
-
 /** Menú principal: banner en capas, acciones de datos y una tarjeta por pantalla. */
-export default function Inicio({ onDescargar, onSubir }: InicioProps) {
+export default function Inicio() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-[1280px] flex-col px-4 pb-6 sm:px-8">
       {/* Banner apilado: cuatro capas de verde que se estrechan hacia el centro. */}
@@ -30,10 +24,7 @@ export default function Inicio({ onDescargar, onSubir }: InicioProps) {
         </h1>
       </div>
 
-      <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row sm:gap-8">
-        <BotonDatos onClick={onDescargar} Icono={IconoDescargar} texto="Descargar datos" />
-        <BotonDatos onClick={onSubir} Icono={IconoSubir} texto="Subir datos" />
-      </div>
+      <ImportarExportar />
 
       <nav aria-label="Secciones" className="mt-8 grid flex-1 grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-4 lg:gap-16">
         {TARJETAS.map(({ a, titulo, fondo, Icono }) => (
@@ -50,28 +41,5 @@ export default function Inicio({ onDescargar, onSubir }: InicioProps) {
         ))}
       </nav>
     </main>
-  )
-}
-
-/** Botón verde redondeado de la fila DESCARGAR/SUBIR DATOS. */
-function BotonDatos({
-  onClick,
-  Icono,
-  texto,
-}: {
-  onClick?: () => void
-  Icono: (p: { className?: string }) => React.ReactNode
-  texto: string
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={!onClick}
-      className="bg-residuos-tarjeta etiqueta flex items-center justify-center gap-3 rounded-[2rem] px-8 py-4 text-lg text-white transition hover:brightness-95 focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-tinta disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-96 sm:text-xl"
-    >
-      <Icono className="size-9" />
-      {texto}
-    </button>
   )
 }
