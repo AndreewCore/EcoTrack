@@ -56,7 +56,7 @@ El backend es un proyecto **Maven** en `backend/`. El punto de entrada es
 
 ```bash
 cd backend
-./mvnw javafx:run    # compila + lanza la app JavaFX
+./mvnw javafx:run    # app de escritorio JavaFX (se retira en v1.0.0)
 ./mvnw package       # empaqueta target/ecotrack-backend-<versión>.jar
 ./mvnw clean         # elimina target/
 ```
@@ -66,6 +66,34 @@ En Windows se usa `mvnw.cmd` en lugar de `./mvnw`.
 > No hay pruebas automatizadas en el repositorio (no hay JUnit ni fuentes `test/`).
 
 ---
+
+## API REST (Spring Boot)
+
+El backend expone el dominio como API REST en `http://localhost:8080/api`
+(Spring Boot 4.1, Java 25). Los datos se guardan en CSV en `backend/data/`
+(`residuos.csv`, `vehiculos.csv`); la primera vez se cargan datos de ejemplo.
+
+```bash
+cd backend
+./mvnw spring-boot:run     # API en http://localhost:8080
+./mvnw test                # pruebas JUnit
+```
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/api/residuos?tipo&zona&estado&orden&dir&pagina&tamano` | Lista paginada con filtros y orden (`peso`, `tipo`, `prioridad`, `id`) |
+| GET/PUT/DELETE | `/api/residuos/{id}` | Consultar, editar o eliminar un residuo |
+| POST | `/api/residuos` | Registrar un residuo |
+| GET | `/api/zonas` | GeoJSON de las 18 zonas con sus pesos y utilidad |
+| GET | `/api/zonas/estado` | Pesos y utilidad de cada zona |
+| GET/POST | `/api/vehiculos` | Flota en orden de despacho / registrar vehículo |
+| DELETE | `/api/vehiculos/{id}` | Retirar un vehículo |
+| POST | `/api/despachos` | Despachar el vehículo de la zona más crítica |
+| GET | `/api/centro` | Pila del centro de reciclaje |
+| POST | `/api/centro/procesar` | Procesar el residuo del tope |
+| GET | `/api/estadisticas` | Estadísticas por tipo y por zona |
+| GET | `/api/datos/exportar` | Descargar los residuos en CSV |
+| POST | `/api/datos/importar?modo=agregar\|reemplazar` | Subir un CSV (multipart, campo `archivo`) |
 
 ## Frontend
 
