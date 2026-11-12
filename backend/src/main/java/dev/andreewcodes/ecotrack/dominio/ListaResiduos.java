@@ -12,17 +12,6 @@ import java.util.function.Predicate;
  */
 public class ListaResiduos extends CircularDoublyLinkedList<Residuo> {
 
-    // Lista global solo para la app de escritorio; la API usa la de EcoTrackData.
-    private static ListaResiduos listaResiduosGlobal;
-
-    /** Lista global que comparten los controladores JavaFX. */
-    public static ListaResiduos getListaResiduosGlobal() {
-        if (listaResiduosGlobal == null) {
-            listaResiduosGlobal = new ListaResiduos();
-        }
-        return listaResiduosGlobal;
-    }
-
     // ---------- Ordenamiento (in situ) ----------
 
     public void ordenarPorPeso() {
